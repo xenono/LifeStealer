@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Title of Max’s post.",
+    "content": "Content of Max’s Duis in malesuada enim, vel blandit lectus. Nulla luctus urna massa, in viverra dolor eleifend ac. Donec ac odio magna. Nam bibendum sapien a quam facilisis, dignissim laoreet felis mollis. Curabitur rutrum arcu lectus, eget pellentesque felis tincidunt et. Quisque odio justo, feugiat sit amet ",
+    "name": "Max",
+    "lastName": "Silver",
+    "date": "10/02/2021",
+    "time": "16:21",
+    "image": "https://cdn.pixabay.com/photo/2021/03/02/12/20/mountains-6062271_960_720.jpg",
+    "background": "#F3EED9"
+  },
+  {
+    "title": "Title of Johny’s post.",
+    "content": "Content of Max’s Duis in malesuada enim, vel blandit lectus. Nulla luctus urna massa, in viverra dolor eleifend ac. Donec ac odio magna. Nam bibendum sapien a quam facilisis, dignissim laoreet felis mollis. Curabitur rutrum arcu lectus, eget pellentesque felis tincidunt et. Quisque odio justo, feugiat sit amet ",
+    "name": "Johny",
+    "lastName": "Silverhand",
+    "date": "11/02/2021",
+    "time": "14:24",
+    "image": "https://cdn.pixabay.com/photo/2021/02/09/20/45/architecture-5999913_960_720.jpg",
+    "background": "#FF978A"
+  },
+  {
+    "title": "Title of Anthony’s post.",
+    "content": "Content of Max’s Duis in malesuada enim, vel blandit lectus. Nulla luctus urna massa, in viverra dolor eleifend ac. Donec ac odio magna. Nam bibendum sapien a quam facilisis, dignissim laoreet felis mollis. Curabitur rutrum arcu lectus, eget pellentesque felis tincidunt et. Quisque odio justo, feugiat sit amet ",
+    "name": "Anthony",
+    "lastName": "Kebab",
+    "date": "11/02/2021",
+    "time": "14:24",
+    "image": "https://cdn.pixabay.com/photo/2021/02/01/20/16/yachts-5971866_960_720.jpg",
+    "background": "#90ACE1"
+  }
+]
+
+
