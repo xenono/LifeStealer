@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState} from "react";
 import styled from 'styled-components'
+import axios from 'axios'
+import { Redirect } from 'react-router'
 
 import { Form, Field } from "react-final-form";
 import { FORM_ERROR } from "final-form";
@@ -50,12 +52,27 @@ const StyledHeading = styled(HeadingOne)`
 `
 
 const Signup = () => {
+  const [isSignupSuccess, setSignupSuccess] = useState(false)
 
-  const onSubmit = (values) => {
-    console.log(values.username);
-    console.log(values.password);
-    console.log(values.confirmPassword);
+  const onSubmit = async (values) => {
+    try {
+      const result = await axios.post(process.env.REACT_APP_API_URL + "/signup", {
+        username: values.username,
+        password: values.password,
+        confirmPassword: values.confirmPassword
+      });
+      if(result.data.success){
+        setSignupSuccess(true)
+      }
+
+    } catch (err){
+      console.log(err.response.data.message)
+    }
   };
+
+  if(isSignupSuccess){
+    return <Redirect to="/login"/>
+  }
   return (
     <Wrapper>
       <StyledHeading>Let Lifestealer to steal your life!</StyledHeading>

@@ -7,9 +7,9 @@ import data from "data/posts.json";
 import Post from "components/Post/Post";
 import { Redirect } from "react-router";
 
-import HeadingOne from "../components/Headings/HeadingOne";
 
 const PostWrapper = styled.div`
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,7 +24,6 @@ const Dashboard = ({isLoggedIn}) => {
   const posts = JSON.parse(JSON.stringify(data));
   return (
     <div>
-      <HeadingOne>Dashboard</HeadingOne>
       <PostWrapper>
         {posts.map(post => (
           <Post {...post} key={post.image} />

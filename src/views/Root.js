@@ -2,6 +2,8 @@ import React from "react";
 import MainTemplate from "../templates/MainTemplate";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+// require('dotenv').config()
+
 import { Provider } from "react-redux";
 import store from "store/store";
 

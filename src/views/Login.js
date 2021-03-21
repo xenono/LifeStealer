@@ -1,18 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from 'styled-components'
+import styled from "styled-components";
+import { connect } from "react-redux";
+import { render } from "react-dom";
+import { Redirect } from 'react-router'
 
-
-import { render } from 'react-dom'
-
-import { Form, Field } from 'react-final-form'
-import { FORM_ERROR } from 'final-form'
+import { Form, Field } from "react-final-form";
+import { FORM_ERROR } from "final-form";
 
 import { theme } from "../theme/theme";
 import HeadingOne from "../components/Headings/HeadingOne";
-import Input from 'components/Input/Input'
-import Label from 'components/Label/Label'
-import Button from 'components/Button/Button'
+import Input from "components/Input/Input";
+import Label from "components/Label/Label";
+import Button from "components/Button/Button";
+import { AUTH_REQUEST, authenticateUser } from "../actions/action";
 
 
 const Wrapper = styled.div`
@@ -22,7 +23,7 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
 
-`
+`;
 const FormWrapper = styled.div`
   width: 40%;
   min-width: 600px;
@@ -32,26 +33,29 @@ const FormWrapper = styled.div`
   //justify-content: center;
   align-items: center;
   flex-direction: column;
-  
-`
+
+`;
 const StyledForm = styled(Form)`
   width: 100%;
   height: 100%;
-`
+`;
 const StyledInputWrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-`
+`;
 const ButtonWrapper = styled.div`
-  margin: 72.5px 0;
+  margin: 7.5% 0;
   text-align: center;
-`
-const Login = () => {
+`;
+const Login = ({ authenticate, isLoggedIn }) => {
 
   const onSubmit = (values) => {
-    console.log(values.username)
-    console.log(values.password)
+    authenticate(values.username, values.password);
+  };
+
+  if(isLoggedIn){
+    return <Redirect to="/"/>
   }
   return (
     <Wrapper>
@@ -60,14 +64,14 @@ const Login = () => {
         <StyledForm
           onSubmit={onSubmit}
           validate={values => {
-            const errors = {}
-          //   if (!values.username) {
-          //     errors.username = 'Required'
-          //   }
-          //   if (!values.password) {
-          //     errors.password = 'Required'
-          //   }
-          //   return errors
+            const errors = {};
+            //   if (!values.username) {
+            //     errors.username = 'Required'
+            //   }
+            //   if (!values.password) {
+            //     errors.password = 'Required'
+            //   }
+            //   return errors
           }}
           render={({
                      submitError,
@@ -109,10 +113,18 @@ const Login = () => {
         />
       </FormWrapper>
     </Wrapper>
-)}
-
-Login.propTypes = {
-
+  );
 };
 
-export default Login;
+const mapDispatchToProps = dispatch => ({
+  authenticate: (username, password) => dispatch(authenticateUser(username, password))
+});
+
+const mapStateToProps = (state) => {
+  const { isLoggedIn } = state
+  return { isLoggedIn }
+}
+
+Login.propTypes = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

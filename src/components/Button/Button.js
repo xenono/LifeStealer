@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const Button = styled.button`
-  font-size: 36px;
+  font-size: ${(props) => props.fontSize || '36px'};
   color: #FFF;
   background-color: ${({theme}) => theme.primary};
   border: none;
