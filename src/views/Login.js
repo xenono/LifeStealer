@@ -1,19 +1,18 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { render } from "react-dom";
-import { Redirect } from 'react-router'
+import { Redirect } from "react-router";
+import axios from "axios";
+import { loginUser } from "actions/action";
+
 
 import { Form, Field } from "react-final-form";
-import { FORM_ERROR } from "final-form";
 
-import { theme } from "../theme/theme";
 import HeadingOne from "../components/Headings/HeadingOne";
 import Input from "components/Input/Input";
 import Label from "components/Label/Label";
 import Button from "components/Button/Button";
-import { AUTH_REQUEST, authenticateUser } from "../actions/action";
+import MainTemplate from "../templates/MainTemplate";
 
 
 const Wrapper = styled.div`
@@ -48,83 +47,93 @@ const ButtonWrapper = styled.div`
   margin: 7.5% 0;
   text-align: center;
 `;
-const Login = ({ authenticate, isLoggedIn }) => {
+const Login = ({ isLoggedIn, login }) => {
+  const onSubmit = async ({ email, password }) => {
+    try {
+      const result = await axios.post(process.env.REACT_APP_API_URL + "/login", {
+        email,
+        password
+      }, { withCredentials: true });
+      login()
 
-  const onSubmit = (values) => {
-    authenticate(values.username, values.password);
+    } catch (err) {
+      console.log(err.res);
+    }
+
   };
 
-  if(isLoggedIn){
-    return <Redirect to="/"/>
+  if (isLoggedIn) {
+    return <Redirect to="/" />;
   }
   return (
-    <Wrapper>
-      <FormWrapper>
-        <HeadingOne color="#000">Sign in to Lifestealer</HeadingOne>
-        <StyledForm
-          onSubmit={onSubmit}
-          validate={values => {
-            const errors = {};
-            //   if (!values.username) {
-            //     errors.username = 'Required'
-            //   }
-            //   if (!values.password) {
-            //     errors.password = 'Required'
-            //   }
-            //   return errors
-          }}
-          render={({
-                     submitError,
-                     handleSubmit,
-                     form,
-                     submitting,
-                     pristine,
-                     values
-                   }) => (
-            <form onSubmit={handleSubmit}>
-              <Field name="username">
-                {({ input, meta }) => (
-                  <StyledInputWrapper>
-                    <Label>Username</Label>
-                    <Input {...input} type="text" placeholder="Username" />
-                    {(meta.error || meta.submitError) && meta.touched && (
-                      <span>{meta.error || meta.submitError}</span>
-                    )}
-                  </StyledInputWrapper>
-                )}
-              </Field>
-              <Field name="password">
-                {({ input, meta }) => (
-                  <StyledInputWrapper>
-                    <Label>Password</Label>
-                    <Input {...input} type="password" placeholder="Password" />
-                    {meta.error && meta.touched && <span>{meta.error}</span>}
-                  </StyledInputWrapper>
-                )}
-              </Field>
-              {submitError && <div className="error">{submitError}</div>}
-              <ButtonWrapper>
-                <Button type="submit" disabled={submitting}>
-                  Log In
-                </Button>
-              </ButtonWrapper>
-            </form>
-          )}
-        />
-      </FormWrapper>
-    </Wrapper>
+    <MainTemplate >
+      <Wrapper>
+        <FormWrapper>
+          <HeadingOne color="#000">Sign in to Lifestealer</HeadingOne>
+          <StyledForm
+            onSubmit={onSubmit}
+            validate={() => {
+              // const errors = {};
+              //   if (!values.username) {
+              //     errors.username = 'Required'
+              //   }
+              //   if (!values.password) {
+              //     errors.password = 'Required'
+              //   }
+              //   return errors
+            }}
+            render={({
+                       submitError,
+                       handleSubmit,
+                       // form,
+                       submitting
+                       // pristine,
+                       // values
+                     }) => (
+              <form onSubmit={handleSubmit}>
+                <Field name="email">
+                  {({ input, meta }) => (
+                    <StyledInputWrapper>
+                      <Label>Email</Label>
+                      <Input {...input} type="text" placeholder="your@email.com" />
+                      {(meta.error || meta.submitError) && meta.touched && (
+                        <span>{meta.error || meta.submitError}</span>
+                      )}
+                    </StyledInputWrapper>
+                  )}
+                </Field>
+                <Field name="password">
+                  {({ input, meta }) => (
+                    <StyledInputWrapper>
+                      <Label>Password</Label>
+                      <Input {...input} type="password" placeholder="Password" />
+                      {meta.error && meta.touched && <span>{meta.error}</span>}
+                    </StyledInputWrapper>
+                  )}
+                </Field>
+                {submitError && <div className="error">{submitError}</div>}
+                <ButtonWrapper>
+                  <Button type="submit" disabled={submitting}>
+                    Log In
+                  </Button>
+                </ButtonWrapper>
+              </form>
+            )}
+          />
+        </FormWrapper>
+      </Wrapper>
+    </MainTemplate>
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  authenticate: (username, password) => dispatch(authenticateUser(username, password))
-});
-
 const mapStateToProps = (state) => {
-  const { isLoggedIn } = state
-  return { isLoggedIn }
-}
+  const { isLoggedIn } = state;
+  return { isLoggedIn };
+};
 
+const mapDispatchToProps = dispatch => ({
+  login:() => dispatch(loginUser())
+})
 Login.propTypes = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

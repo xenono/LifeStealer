@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import PropTypes from "prop-types";
 import Button from 'components/Button/Button'
 
 const Wrapper = styled.div`

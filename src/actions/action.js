@@ -1,42 +1,41 @@
-import React from 'react'
-import { Redirect } from "react-router";
+import axios from "axios";
 
-export const AUTH_REQUEST = 'AUTH_REQUEST';
-export const AUTH_SUCCESS = 'AUTH_SUCCESS';
-export const AUTH_FAILURE = 'AUTH_FAILURE';
+export const FETCH_POSTS_SUCCESS = "FETCH_POSTS_SUCCESS";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILED = "LOGIN_FAILED";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED = "LOGOUT_FAILED";
 
-export const FETCH_REQUEST = 'FETCH_REQUEST';
-export const FETCH_SUCCESS = 'FETCH_SUCCESS';
-export const FETCH_ALL_SUCCESS = 'FETCH_ALL_SUCCESS';
-export const FETCH_FAILURE = 'FETCH_FAILURE';
+const API_URL = process.env.REACT_APP_API_URL;
 
-export const ADD_ITEM_REQUEST = 'ADD_ITEM_REQUEST';
-export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
-export const ADD_ITEM_FAILURE = 'ADD_ITEM_FAILURE';
-
-export const DELETE_ITEM_REQUEST = 'DELETE_ITEM_REQUEST';
-export const DELETE_ITEM_SUCCESS = 'DELETE_ITEM_SUCCESS';
-export const DELETE_ITEM_FAILURE = 'DELETE_ITEM_FAILURE';
-
-export const UPDATE_ITEM_REQUEST = 'UPDATE_ITEM_REQUEST';
-export const UPDATE_ITEM_SUCCESS = 'UPDATE_ITEM_SUCCESS';
-export const UPDATE_ITEM_FAILURE = 'UPDATE_ITEM_FAILURE';
-
-export const authenticateUser = (username, password) => dispatch => {
-  dispatch({type: AUTH_REQUEST})
-  let payload;
-  if(username === "edan" && password === "1234"){
-    payload = {
-      data: true
-    }
-  } else {
-    payload = {
-      data: false
-    }
+export const fetchPosts = () => async dispatch => {
+  try {
+    const resultData = await axios.get(API_URL + "/posts", {
+      withCredentials: true
+    });
+    dispatch({
+      type: FETCH_POSTS_SUCCESS,
+      payload: {
+        posts: resultData.data.posts
+      }
+    });
+  } catch (err) {
+    console.log(err.response.data.message);
   }
-  dispatch({type: AUTH_SUCCESS, payload})
-}
+};
 
-export const logoutUser = () => dispatch => {
-  dispatch({type: "Logout"})
+export const logoutUser = () => async dispatch => {
+  try {
+    const result = await axios.get(API_URL + "/logout", {
+      withCredentials: true
+    });
+    dispatch({ type: LOGOUT_SUCCESS } );
+  } catch (err) {
+    console.log(err);
+    dispatch({ type: LOGOUT_FAILED });
+  }
+};
+
+export const loginUser = () => dispatch => {
+  dispatch({ type: LOGIN_SUCCESS });
 }

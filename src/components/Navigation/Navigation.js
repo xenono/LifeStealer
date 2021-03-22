@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import LogoImg from "assets/Logo.svg";
-import { theme } from "../../theme/theme";
 import { connect } from "react-redux";
+
 import Button from "../Button/Button";
 import SearchBar from "../SearchBar/SearchBar";
 import Link from "components/Link/Link";
@@ -61,7 +61,8 @@ const LoggedOutNavigation = (
   </LoginLinksWrapper>
 );
 
-const Navigation = ({ isLoggedIn, logout }) => {
+const Navigation = ({ isLoggedIn, logout}) => {
+
   return (
     <Wrapper>
       <Logo src={LogoImg} />
@@ -75,7 +76,7 @@ const mapStateToProps = (state) => {
   return { isLoggedIn };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   logout: () => dispatch(logoutUser())
 })
 

@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+
+import CheckUserAuth from "hoc/checkUserAuth";
 
 import { connect } from 'react-redux'
 
-import data from "data/posts.json";
 import Post from "components/Post/Post";
-import { Redirect } from "react-router";
+import MainTemplate from "../templates/MainTemplate";
+
+import { fetchPosts as fetchPostsAction } from 'actions/action'
 
 
 const PostWrapper = styled.div`
@@ -16,26 +19,33 @@ const PostWrapper = styled.div`
   align-items: center;
 `;
 
-const Dashboard = ({isLoggedIn}) => {
-
-  if(!isLoggedIn){
-    return <Redirect to="/login"/>
-  }
-  const posts = JSON.parse(JSON.stringify(data));
+const Dashboard = ({ cookies,posts, fetchPosts }) => {
+  useEffect(() => {
+    fetchPosts()
+  },[])
+  posts = posts ? posts : []
   return (
-    <div>
-      <PostWrapper>
-        {posts.map(post => (
-          <Post {...post} key={post.image} />
-        ))}
-      </PostWrapper>
-    </div>
+    <MainTemplate cookies={cookies}>
+      <CheckUserAuth cookies={cookies}>
+        <PostWrapper>
+          {posts.length ? posts.slice(0).reverse().map(post => (
+            <Post {...post} key={post.title} />
+          )): <p>no posts</p>}
+        </PostWrapper>
+      </CheckUserAuth>
+    </MainTemplate>
   );
 };
 
-const mapStateToProps = (state) => {
-  const { isLoggedIn } = state
-  return { isLoggedIn }
+const mapStateToProps = ({posts}) => {
+  return {
+    posts
+  }
 }
 
-export default connect(mapStateToProps,null)(Dashboard);
+const mapDispatchToProps = dispatch => ({
+  fetchPosts: () => dispatch(fetchPostsAction())
+})
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Dashboard);

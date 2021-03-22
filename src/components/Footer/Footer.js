@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -10,7 +9,7 @@ const Wrapper = styled.div`
   color: White;
 `
 
-const Footer = props => {
+const Footer = () => {
   return (
     <Wrapper>
       &copy; Copyrights Adrian Urbanczyk

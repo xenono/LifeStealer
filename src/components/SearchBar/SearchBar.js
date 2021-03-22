@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -20,7 +19,7 @@ const StyledInput = styled.input`
   outline: none;
 `
 
-const SearchBar = props => {
+const SearchBar = () => {
   return (
     <Wrapper>
       <StyledInput type="text" placeholder="Search for a friend"/>

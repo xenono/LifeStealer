@@ -1,16 +1,17 @@
 import React from "react";
+import { ThemeProvider } from "styled-components";
+
 import Navigation from "components/Navigation/Navigation";
 import Footer from "../components/Footer/Footer";
 import { theme } from "theme/theme";
-import { ThemeProvider } from "styled-components";
 
-const MainTemplate = ({ children }) => {
+const MainTemplate = ({ children, cookies}) => {
 
   return (
   <>
     <ThemeProvider theme={theme}>
       <>
-        <Navigation />
+        <Navigation cookies={cookies}/>
         {children}
         <Footer />
       </>
@@ -18,5 +19,6 @@ const MainTemplate = ({ children }) => {
 
   </>
 )};
+
 
 export default MainTemplate;
