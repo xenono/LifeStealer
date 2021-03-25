@@ -9,7 +9,7 @@ import { loginUser } from "actions/action";
 import { Form, Field } from "react-final-form";
 
 import HeadingOne from "../components/Headings/HeadingOne";
-import Input from "components/Input/Input";
+import Input from "components/Inputs/Input/Input";
 import Label from "components/Label/Label";
 import Button from "components/Button/Button";
 import MainTemplate from "../templates/MainTemplate";

@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+
 import CheckUserAuth from "hoc/checkUserAuth";
 
 import ProfilePicture from "../components/profilePicture/profilePicture";
 import ProfileInfo from "../components/ProfileInfo/ProfileInfo";
 import SunflowersImage from "assets/sunflowers.jpg";
-import LadImage from "assets/lad.jpg";
 import HeadingOne from "../components/Headings/HeadingOne";
 import HeadingTwo from "../components/Headings/HeadingTwo";
 import MainTemplate from "../templates/MainTemplate";
 
+import { getUser as getUserAction } from "actions/action";
 
 
 const Wrapper = styled.div`
@@ -31,27 +33,37 @@ const BasicInfo = styled.div`
     color: #A1A1A1;
   }
 `;
-const Profile = ({cookies}) => {
+const Profile = ({ cookies, getUser, user: {name, lastname, profileImage, backgroundImage,job, country,city,introduction,workDescription, hobbyDescription } }) => {
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <MainTemplate cookies={cookies}>
-    <CheckUserAuth cookies={cookies}>
-      <Wrapper>
-        <ProfileBackground />
-        <ProfilePicture src={LadImage} mainProfile />
-        <BasicInfo>
-          <HeadingOne>Max Silver</HeadingOne>
-          <HeadingTwo>Project Manager in Amazon</HeadingTwo>
-          <HeadingTwo>Liverpool, United Kingdom</HeadingTwo>
-        </BasicInfo>
-        <ProfileInfo>
-
-        </ProfileInfo>
-      </Wrapper>
-    </CheckUserAuth>
+      <CheckUserAuth cookies={cookies}>
+        <Wrapper>
+          <ProfileBackground />
+          <ProfilePicture src={profileImage} mainProfile />
+          <BasicInfo>
+            <HeadingOne>{name} {lastname}</HeadingOne>
+            <HeadingTwo>{job}</HeadingTwo>
+            <HeadingTwo>{city}, {country}</HeadingTwo>
+          </BasicInfo>
+          <ProfileInfo introContent={introduction} workContent={workDescription} hobbyContent={hobbyDescription}/>
+        </Wrapper>
+      </CheckUserAuth>
     </MainTemplate>
   );
 };
 
+const mapStateToProps = ({user}) => {
+  return { user }
+}
+
+const mapDispatchToProps = () => dispatch => ({
+  getUser: () => dispatch(getUserAction())
+});
+
 Profile.propTypes = {};
 
-export default Profile;
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

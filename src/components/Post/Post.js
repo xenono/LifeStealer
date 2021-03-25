@@ -30,6 +30,7 @@ const Span = styled.span`
 `
 
 const ContentWrapper = styled.div`
+  width: 100%;
     padding: 5% 7.5% 5px 7.5%;
 `
 const UserInfoWrapper = styled.div`

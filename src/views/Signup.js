@@ -6,7 +6,7 @@ import { Redirect } from "react-router";
 import { Form, Field } from "react-final-form";
 
 import HeadingOne from "../components/Headings/HeadingOne";
-import Input from "components/Input/Input";
+import Input from "components/Inputs/Input/Input";
 import Label from "components/Label/Label";
 import Button from "components/Button/Button";
 import MainTemplate from "../templates/MainTemplate";
@@ -53,7 +53,6 @@ const Signup = () => {
   const [isSignupSuccess, setSignupSuccess] = useState(false);
 
   const onSubmit = async (values) => {
-    console.log(values)
     try {
       const result = await axios.post(process.env.REACT_APP_API_URL + "/signup", {
         email: values.email,

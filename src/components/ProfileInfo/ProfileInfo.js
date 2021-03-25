@@ -60,28 +60,20 @@ const ButtonWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `
-const ProfileInfo = ({ intro, work, hobby }) => {
+const ProfileInfo = ({ introContent, workContent, hobbyContent }) => {
   const [activeTile, setActiveTile] = useState(0);
 
-  intro = {
+  const intro = {
     title: "Quick Introductiom",
-    content: "I am a Full Stack Engineer with over 15 years of experience. constantly learning and improving my skills, always strive to deliver more than expected. I believe that no one is so senior that cannot learn and no one is so junior that cannot teach\n" +
-      "\n" +
-      "Skills: JavaScript, Typescript, ES6+, Node.JS, Express, React.JS, Redux, React Native, SQL, SQL Server, MySQL, PostgreSQL, MongoDB, Rest, GraphQL, HTML5, CSS3, SASS, UI, UX.",
+    content: introContent
   };
-  work = {
+  const work = {
     title: "About my work",
-    content: "Full Stack Engineer\n" +
-      "GLC Consulting\n" +
-      "Jul 2006 - Present 14 years 9 months\n" +
-      "\n" +
-      "Brazil\n" +
-      "\n" +
-      "Company focused on municipality's tax management sector, some solutions including a service tax management application, invoice management application and movement of goods, transportation, communication services tax management application",
+    content: workContent
   };
-  hobby = {
+  const hobby = {
     title: "About my hobby",
-    content: "I love cookies.",
+    content: hobbyContent
   };
 
 
