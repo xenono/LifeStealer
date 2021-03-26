@@ -55,11 +55,7 @@ const TileListLi = styled.li`
   `}
 `;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
+
 const ProfileInfo = ({ introContent, workContent, hobbyContent }) => {
   const [activeTile, setActiveTile] = useState(0);
 
@@ -94,13 +90,11 @@ const ProfileInfo = ({ introContent, workContent, hobbyContent }) => {
         <h1>{content[activeTile].title}</h1>
         <p>{content[activeTile].content}</p>
       </TileContent>
-      <ButtonWrapper>
-        <Button>Edit profile</Button>
-      </ButtonWrapper>
+
     </Wrapper>
   );
 };
 
-ProfileInfo.propTypes = {};
+const mapStateToProps = ({user}) => {user}
 
 export default ProfileInfo;

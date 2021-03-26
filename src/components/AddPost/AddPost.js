@@ -10,38 +10,9 @@ import Label from "components/Label/Label";
 import Button from "components/Button/Button";
 import UserInput from "../Inputs/UserInput/UserInput";
 import ColorInput from "../Inputs/ColorInput/ColorInput";
-import FileInput from "../Inputs/FileInput/FileInput"
+import FileInput from "../Inputs/FileInput/FileInput";
+import FormWrapper from "../FromWrapper/FormWrapper";
 
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-bottom: 40px;
-`;
-
-
-const FormWrapper = styled.div`
-  width: 60%;
-  min-width: 600px;
-  height: 75%;
-  border: 4px solid ${({ theme }) => theme.primary};
-  display: flex;
-  //justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-
-const Form = styled.form`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-`;
 
 const FlexWrapper = styled.div`
   width: 80%;
@@ -63,32 +34,39 @@ const AddPost = ({ addPost }) => {
     addPost(title, content, color, image);
   };
 
-  return (
-    <Wrapper>
-      <FormWrapper>
-        <Form onSubmit={onSubmit} enctype="multipart/form-data">
-          <UserInput label="Title" placeholder="Title of your post." id="title" />
-          <UserInput label="What do you want to share?" placeholder="Content of your post." id="content"
-                     type="textarea" />
-          <FlexWrapper>
-            <ColorInput label="Background color" placeholder="Color in hexadecimal" id="color" />
-            <FileInput label="Image" text="Choose image" id="file" />
-          </FlexWrapper>
-          <ButtonWrapper>
-            <Button type="submit">
-              Publish
-            </Button>
-          </ButtonWrapper>
-        </Form>
+  const Form = styled.form`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  `;
 
-      </FormWrapper>
-    </Wrapper>
+
+  return (
+    <FormWrapper>
+      <Form onSubmit={onSubmit} enctype="multipart/form-data">
+        <UserInput label="Title" placeholder="Title of your post." id="title" />
+        <UserInput label="What do you want to share?" placeholder="Content of your post." id="content"
+                   type="textarea" />
+        <FlexWrapper>
+          <ColorInput label="Background color" placeholder="Color in hexadecimal" id="color" />
+          <FileInput label="Image" text="Choose image" id="file" />
+        </FlexWrapper>
+        <ButtonWrapper>
+          <Button type="submit">
+            Publish
+          </Button>
+        </ButtonWrapper>
+      </Form>
+    </FormWrapper>
   );
 };
 
 AddPost.propTypes = {};
 
-const mapDispatchToProps = (title, content, color, file) => dispatch => ({
+const mapDispatchToProps = () => dispatch => ({
   addPost: (title, content, color, file) => dispatch(addPostAction(title, content, color, file))
 });
 

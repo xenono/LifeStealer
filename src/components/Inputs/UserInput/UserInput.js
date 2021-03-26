@@ -38,11 +38,11 @@ const Textarea = styled.textarea`
   }
 `;
 
-const UserInput = ({ label, placeholder,id, type }) => {
+const UserInput = ({ label, placeholder,id, type, defaultValue }) => {
   return (
     <StyledInputWrapper>
       <StyledLabel>{label}</StyledLabel>
-      {type === "textarea" ? <Textarea type="text" placeholder={placeholder} id={id}/> : <StyledInput type="text" placeholder={placeholder} id={id}/>}
+      {type === "textarea" ? <Textarea type="text" placeholder={placeholder} id={id}  defaultValue={defaultValue}/> : <StyledInput type="text" placeholder={placeholder} id={id} defaultValue={defaultValue}/>}
     </StyledInputWrapper>
   );
 };
