@@ -3,13 +3,13 @@ import styled from "styled-components";
 import axios from "axios";
 import { Redirect } from "react-router";
 
-import { Form, Field } from "react-final-form";
-
 import HeadingOne from "../components/Headings/HeadingOne";
 import Input from "components/Inputs/Input/Input";
 import Label from "components/Label/Label";
 import Button from "components/Button/Button";
 import MainTemplate from "../templates/MainTemplate";
+import Error from "../components/Error/Error";
+import {API_URL} from "../actions/action";
 
 
 const Wrapper = styled.div`
@@ -31,18 +31,13 @@ const FormWrapper = styled.div`
   margin: 0 0 50px 0;
 
 `;
-const StyledForm = styled(Form)`
+const Form = styled.form`
   width: 100%;
   height: 100%;
-`;
-const StyledInputWrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-`;
-const ButtonWrapper = styled.div`
-  margin: 20px 0;
-  text-align: center;
+  align-items: center;
 `;
 
 const StyledHeading = styled(HeadingOne)`
@@ -51,22 +46,33 @@ const StyledHeading = styled(HeadingOne)`
 
 const Signup = () => {
   const [isSignupSuccess, setSignupSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("")
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    const email = e.target.email.value
+    const password = e.target.password.value
+    const confirmPassword = e.target.confirmPassword.value
+    const name = e.target.name.value
+    const lastname = e.target.lastname.value
     try {
-      const result = await axios.post(process.env.REACT_APP_API_URL + "/signup", {
-        email: values.email,
-        password: values.password,
-        confirmPassword: values.confirmPassword,
-        name: values.name,
-        lastname: values.lastname
+      const result = await axios.post(API_URL + "/signup", {
+        email,
+        password,
+        confirmPassword,
+        name,
+        lastname
       });
       if (result.data.success) {
         setSignupSuccess(true);
       }
 
     } catch (err) {
-      console.log(err.response.data.message);
+      if(err.response.status === 422){
+        setErrorMessage(err.response.data.message)
+      } else {
+        setErrorMessage("Server problem.")
+      }
     }
   };
 
@@ -77,91 +83,25 @@ const Signup = () => {
     <MainTemplate>
       <Wrapper>
         <StyledHeading>Let Lifestealer to steal your life!</StyledHeading>
-        <FormWrapper>
-          <HeadingOne color="#000">Sign up to Lifestealer</HeadingOne>
-          <StyledForm
-            onSubmit={onSubmit}
-            validate={() => {
-              // values between parenthesis
-              // const errors = {};
-              //   if (!values.username) {
-              //     errors.username = 'Required'
-              //   }
-              //   if (!values.password) {
-              //     errors.password = 'Required'
-              //   }
-              //   return errors
-            }}
-            render={({
-                       submitError,
-                       handleSubmit,
-                       // form,
-                       submitting
-                       // pristine,
-                       // values
-                     }) => (
-              <form onSubmit={handleSubmit}>
-                <Field name="email">
-                  {({ input, meta }) => (
-                    <StyledInputWrapper>
-                      <Label>Email</Label>
-                      <Input {...input} type="email" placeholder="your@email.com" />
-                      {(meta.error || meta.submitError) && meta.touched && (
-                        <span>{meta.error || meta.submitError}</span>
-                      )}
-                    </StyledInputWrapper>
-                  )}
-                </Field>
-                <Field name="name">
-                  {({ input, meta }) => (
-                    <StyledInputWrapper>
-                      <Label>Your name</Label>
-                      <Input {...input} type="text" placeholder="Joe" />
-                      {(meta.error || meta.submitError) && meta.touched && (
-                        <span>{meta.error || meta.submitError}</span>
-                      )}
-                    </StyledInputWrapper>
-                  )}
-                </Field>
-                <Field name="lastname">
-                  {({ input, meta }) => (
-                    <StyledInputWrapper>
-                      <Label>Your last name</Label>
-                      <Input {...input} type="text" placeholder="Doe" />
-                      {(meta.error || meta.submitError) && meta.touched && (
-                        <span>{meta.error || meta.submitError}</span>
-                      )}
-                    </StyledInputWrapper>
-                  )}
-                </Field>
-                <Field name="password">
-                  {({ input, meta }) => (
-                    <StyledInputWrapper>
-                      <Label>Password</Label>
-                      <Input {...input} type="password" placeholder="Please not 1234" />
-                      {meta.error && meta.touched && <span>{meta.error}</span>}
-                    </StyledInputWrapper>
-                  )}
-                </Field>
-                <Field name="confirmPassword">
-                  {({ input, meta }) => (
-                    <StyledInputWrapper>
-                      <Label>Confirm Password</Label>
-                      <Input {...input} type="password" placeholder="Repeat password" />
-                      {meta.error && meta.touched && <span>{meta.error}</span>}
-                    </StyledInputWrapper>
-                  )}
-                </Field>
-                {submitError && <div className="error">{submitError}</div>}
-                <ButtonWrapper>
-                  <Button type="submit" disabled={submitting}>
-                    Create account
-                  </Button>
-                </ButtonWrapper>
-              </form>
-            )}
-          />
-        </FormWrapper>
+            <FormWrapper>
+              <HeadingOne color="#000">Sign in to Lifestealer</HeadingOne>
+              {errorMessage && <Error message={errorMessage}/>}
+              <Form onSubmit={onSubmit}>
+                <Label htmlFor="email">Email</Label>
+                <Input placeholder="your@email.com" name="email" id="email" type="email"/>
+                <Label htmlFor="name">Name</Label>
+                <Input placeholder="Chuck" name="name" id="name" type="text"/>
+                <Label htmlFor="lastname">Last name</Label>
+                <Input placeholder="Norris" name="lastname" id="lastname" type="text"/>
+                <Label htmlFor="password">Password</Label>
+                <Input placeholder="Just not 1234" name="password" id="password" type="password"/>
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Input placeholder="Repeat your password" name="confirmPassword" id="confirmPassword" type="password"/>
+                <Button type="submit" >
+                  Sign up
+                </Button>
+              </Form>
+            </FormWrapper>
       </Wrapper>
     </MainTemplate>
   );

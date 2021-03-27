@@ -11,7 +11,7 @@ export const ADD_POST_FAILED = "ADD_POST_FAILED";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const GET_USER_FAILED = "GET_USER_FAILED";
 
-const API_URL = process.env.REACT_APP_API_URL;
+export const API_URL = "https://lifestealer.herokuapp.com"
 
 export const fetchPosts = () => async dispatch => {
   try {

@@ -4,6 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
+.eslintrc
+.prettierrc
+.env
 
 # testing
 /coverage
@@ -27,6 +30,9 @@ yarn-error.log*
 /node_modules
 /.pnp
 .pnp.js
+.prettierrc
+.eslintrc
+.env
 
 # testing
 /coverage

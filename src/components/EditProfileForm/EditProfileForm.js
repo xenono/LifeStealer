@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import FormWrapper from "../FromWrapper/FormWrapper";
+import FormWrapper from "../FormWrapper/FormWrapper";
 import UserInput from "../Inputs/UserInput/UserInput";
 import Button from 'components/Button/Button'
 import FileInput from "../Inputs/FileInput/FileInput";

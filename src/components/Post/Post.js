@@ -54,12 +54,11 @@ const PostInfoWrapper = styled(TimeInfoWrapper)`
   margin-bottom: 30px;
 `
 
-const ProfileCircle = styled.div`
+const ProfileCircle = styled.img`
   width: 75px;
   height: 75px;
   margin-right: 30px;
-  border-radius: 100px;
-  background-color: #000;
+  border-radius: 200px;
 `
 
 const ReactionBar = styled.div`
@@ -67,18 +66,18 @@ const ReactionBar = styled.div`
   background-color: ${({bColor}) => bColor};
 `
 
-const Post = ({ title, content, image, background, creator, createdAt }) => {
+const Post = ({ title, content, image, background, creator, createdAt,profileImage }) => {
   const date = new Date(createdAt)
   return (
     <Wrapper bColor={background}>
       <ContentWrapper>
         <PostInfoWrapper>
           <UserInfoWrapper>
-            <ProfileCircle />
+            <ProfileCircle src={creator.profileImage}/>
             <Paragraph>{creator.name} {creator.lastname}</Paragraph>
           </UserInfoWrapper>
           <TimeInfoWrapper>
-            <Paragraph>{date.getHours()}:{date.getMinutes()}<Span>{date.getDay()}/{date.getMonth()}/{date.getFullYear()}</Span></Paragraph>
+            <Paragraph>{date.getHours()}:{date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}<Span>{date.getDay()}/{date.getMonth()}/{date.getFullYear()}</Span></Paragraph>
           </TimeInfoWrapper>
         </PostInfoWrapper>
         <div>

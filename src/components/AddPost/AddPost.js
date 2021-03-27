@@ -11,7 +11,7 @@ import Button from "components/Button/Button";
 import UserInput from "../Inputs/UserInput/UserInput";
 import ColorInput from "../Inputs/ColorInput/ColorInput";
 import FileInput from "../Inputs/FileInput/FileInput";
-import FormWrapper from "../FromWrapper/FormWrapper";
+import FormWrapper from "../FormWrapper/FormWrapper";
 
 
 const FlexWrapper = styled.div`

@@ -95,6 +95,10 @@ const ProfileInfo = ({ introContent, workContent, hobbyContent }) => {
   );
 };
 
-const mapStateToProps = ({user}) => {user}
+const mapStateToProps = ({user}) => {
+  return {
+    user
+  }
+}
 
 export default ProfileInfo;
