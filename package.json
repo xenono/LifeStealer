@@ -5,6 +5,7 @@
   "engines": {
     "node": "15.5.1"
   },
+  "homepage": "https://lifestealer.herokuapp.com/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -65,5 +66,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://lifestealer.herokuapp.com/"
+  "proxy": "http://localhost:8080"
 }
