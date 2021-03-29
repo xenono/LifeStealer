@@ -12,18 +12,8 @@ import EditProfileForm from 'components/EditProfileForm/EditProfileForm'
 
 import { getUser as getUserAction } from "actions/action";
 import Button from "../components/Button/Button";
+import ProfilePage from "../components/pages/ProfilePage";
 
-
-const Wrapper = styled.div`
-  position: relative;
-`;
-
-const ProfileBackground = styled.div`
-  width: 100%;
-  height: 400px;
-  background: url(${({src}) => src}) center;
-  background-size: cover;
-`;
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -31,15 +21,7 @@ const ButtonWrapper = styled.div`
   align-items: center;
 `
 
-const BasicInfo = styled.div`
-  margin: 180px auto 0 auto;
-  text-align: center;
-
-  h2 {
-    color: #A1A1A1;
-  }
-`;
-const Profile = ({ cookies, getUser, user: {name, lastname, profileImage, backgroundImage,job, country,city,introduction,workDescription, hobbyDescription } }) => {
+const Profile = ({ cookies, getUser, user }) => {
   const [isEditFormActive, showEditForm] = useState(false)
   useEffect(() => {
     getUser();
@@ -47,20 +29,11 @@ const Profile = ({ cookies, getUser, user: {name, lastname, profileImage, backgr
   return (
     <MainTemplate cookies={cookies}>
       <CheckUserAuth cookies={cookies}>
-        <Wrapper>
-          <ProfileBackground src={backgroundImage}/>
-          <ProfilePicture src={profileImage} mainProfile />
-          <BasicInfo>
-            <HeadingOne>{name} {lastname}</HeadingOne>
-            <HeadingTwo>{job}</HeadingTwo>
-            <HeadingTwo>{city}, {country}</HeadingTwo>
-          </BasicInfo>
-          <ProfileInfo introContent={introduction} workContent={workDescription} hobbyContent={hobbyDescription}/>
+          <ProfilePage user={user}/>
           <ButtonWrapper>
-            <Button onClick={() => showEditForm(!isEditFormActive)}>Edit profile</Button>
+            <Button onClick={() => showEditForm(!isEditFormActive)}>Edit Profile</Button>
           </ButtonWrapper>
-          {isEditFormActive && <EditProfileForm showEditForm={showEditForm} name={name} lastname={lastname} job={job} city={city} country={country} introduction={introduction} workDescription={workDescription} hobbyDescription={hobbyDescription}/>}
-        </Wrapper>
+          {isEditFormActive && <EditProfileForm showEditForm={showEditForm} user={user}/>}
       </CheckUserAuth>
     </MainTemplate>
   );

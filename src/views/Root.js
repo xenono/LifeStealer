@@ -15,6 +15,7 @@ import Login from './Login'
 import Signup from './Signup'
 
 import GlobalStyle from "../theme/GlobalStyle";
+import ForeignUserProfile from "./ForeignUserProfile";
 
 
 const Root = ({ cookies }) => {
@@ -30,10 +31,11 @@ const Root = ({ cookies }) => {
                 rel="stylesheet"/>
             </Helmet>
               <Switch>
-                <Route exact path="/" component={() => <Dashboard cookies={cookies}/>} />
-                <Route path="/profile" component={() => <Profile cookies={cookies}/>} />
-                <Route path="/login" component={() => <Login cookies={cookies}/>} />
-                <Route path="/signup" component={() => <Signup cookies={cookies}/>} />
+                <Route exact path="/" render={props => <Dashboard {...props} cookies={cookies}/>} />
+                <Route exact  path="/profile" render={props => <Profile {...props} cookies={cookies}/>} />
+                <Route path="/profile/:userId" render={props => <ForeignUserProfile {...props} cookies={cookies}/>}/>
+                <Route path="/login" render={props => <Login {...props} cookies={cookies}/>} />
+                <Route path="/signup" render={props => <Signup {...props} cookies={cookies}/>} />
               </Switch>
           </BrowserRouter>
           <GlobalStyle/>
