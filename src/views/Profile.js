@@ -40,7 +40,7 @@ const BasicInfo = styled.div`
   }
 `;
 const Profile = ({ cookies, getUser, user: {name, lastname, profileImage, backgroundImage,job, country,city,introduction,workDescription, hobbyDescription } }) => {
-  const [isEditFormActive, setEditForm] = useState(false)
+  const [isEditFormActive, showEditForm] = useState(false)
   useEffect(() => {
     getUser();
   }, []);
@@ -57,9 +57,9 @@ const Profile = ({ cookies, getUser, user: {name, lastname, profileImage, backgr
           </BasicInfo>
           <ProfileInfo introContent={introduction} workContent={workDescription} hobbyContent={hobbyDescription}/>
           <ButtonWrapper>
-            <Button onClick={() => setEditForm(!isEditFormActive)}>Edit profile</Button>
+            <Button onClick={() => showEditForm(!isEditFormActive)}>Edit profile</Button>
           </ButtonWrapper>
-          {isEditFormActive && <EditProfileForm name={name} lastname={lastname} job={job} city={city} country={country} introduction={introduction} workDescription={workDescription} hobbyDescription={hobbyDescription}/>}
+          {isEditFormActive && <EditProfileForm showEditForm={showEditForm} name={name} lastname={lastname} job={job} city={city} country={country} introduction={introduction} workDescription={workDescription} hobbyDescription={hobbyDescription}/>}
         </Wrapper>
       </CheckUserAuth>
     </MainTemplate>

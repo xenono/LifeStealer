@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from 'styled-components'
+import { Redirect } from 'react-router'
 import { connect } from 'react-redux'
 
 import FormWrapper from "../FormWrapper/FormWrapper";
@@ -27,9 +28,9 @@ const FlexWrapper = styled.div`
 const ButtonWrapper = styled.div`
   text-align: center;
 `;
-const EditProfileForm = ({city, country, job, workDescription, introduction, hobbyDescription,editUser}) => {
+const EditProfileForm = ({city, country, job, workDescription, introduction, hobbyDescription,editUser, showEditForm}) => {
   const handleSubmit = (e) => {
-    // e.preventDefault()
+    e.preventDefault()
     const city = e.target.city.value
     const country = e.target.country.value
     const job = e.target.job.value
@@ -41,8 +42,10 @@ const EditProfileForm = ({city, country, job, workDescription, introduction, hob
     const userInfo = {
       city, country, job, workDescription, introduction, hobbyDescription,profileImage,backgroundImage
     }
+    showEditForm(false)
     editUser(userInfo)
   }
+
   return (
     <FormWrapper>
       <Form onSubmit={handleSubmit} enctype="multipart/form-data">

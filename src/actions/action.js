@@ -10,6 +10,8 @@ export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
 export const ADD_POST_FAILED = "ADD_POST_FAILED";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const GET_USER_FAILED = "GET_USER_FAILED";
+export const EDIT_USER_SUCCESS = "EDIT_USER_SUCCESS"
+export const EDIT_USER_FAILED = "EDIT_USER_FAILED"
 
 export const API_URL = process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_URL_DEV : process.env.REACT_APP_API_URL_PROD
 
@@ -107,15 +109,17 @@ export const editUser = ({
   if(profileImage)
     formData.append("images", profileImage);
   try {
-    await axios.post(API_URL + "/editUser", formData, {
+    const data = await axios.post(API_URL + "/editUser", formData, {
       withCredentials: true,
       headers: {
         "Content-Type": "multipart/form-data"
       }
     });
+    dispatch({type: EDIT_USER_SUCCESS, payload: data.data})
   } catch (err) {
-    if (err.response)
-      console.log(err.response.data.message);
+    // if (err)
+    //   console.log(err.response.data.message);
     console.log(err);
+    dispatch({type: EDIT_USER_FAILED})
   }
 };

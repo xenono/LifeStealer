@@ -8,7 +8,7 @@ import {
   ADD_POST_FAILED,
   ADD_POST_SUCCESS,
   GET_USER_SUCCESS,
-  GET_USER_FAILED
+  GET_USER_FAILED, EDIT_USER_SUCCESS
 } from "actions/action";
 
 const cookies = new Cookies();
@@ -67,6 +67,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload.data
       };
+    case EDIT_USER_SUCCESS:
+      return {
+        ...state,
+        user: {...action.payload}
+      }
     default:
       return {
         ...state
