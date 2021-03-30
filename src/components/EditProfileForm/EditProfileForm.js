@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Redirect } from "react-router";
 import { connect } from "react-redux";
 
 import FormWrapper from "../FormWrapper/FormWrapper";
@@ -8,8 +8,7 @@ import UserInput from "../Inputs/UserInput/UserInput";
 import Button from "components/Button/Button";
 import FileInput from "../Inputs/FileInput/FileInput";
 
-import { editUser, editUser as editUserAction } from "actions/action";
-import mapStateToProps from "react-redux/lib/connect/mapStateToProps";
+import { editUser as editUserAction } from "actions/action";
 
 const Form = styled.form`
   width: 100%;
@@ -72,6 +71,18 @@ const EditProfileForm = ({
       </Form>
     </FormWrapper>
   );
+};
+
+EditProfileForm.propTypes = {
+  city: PropTypes.string,
+  country: PropTypes.string,
+  job: PropTypes.string,
+  workDescription: PropTypes.string,
+  introduction: PropTypes.string,
+  hobbyDescription: PropTypes.string,
+  editUser: PropTypes.func,
+  showEditForm: PropTypes.func,
+  user: PropTypes.object
 };
 
 const mapDispatchToProps = () => dispatch => ({

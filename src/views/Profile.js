@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from 'prop-types'
 import styled from "styled-components";
 import { connect } from "react-redux";
 
 import CheckUserAuth from "hoc/checkUserAuth";
-import ProfilePicture from "../components/profilePicture/profilePicture";
-import ProfileInfo from "../components/ProfileInfo/ProfileInfo";
-import HeadingOne from "../components/Headings/HeadingOne";
-import HeadingTwo from "../components/Headings/HeadingTwo";
 import MainTemplate from "../templates/MainTemplate";
 import EditProfileForm from 'components/EditProfileForm/EditProfileForm'
 
@@ -47,6 +44,10 @@ const mapDispatchToProps = () => dispatch => ({
   getUser: () => dispatch(getUserAction())
 });
 
-Profile.propTypes = {};
+Profile.propTypes = {
+  cookies: PropTypes.object.isRequired,
+  getUser: PropTypes.func,
+  user: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

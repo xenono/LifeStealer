@@ -85,5 +85,11 @@ const FileInput = ({label, id ,text}) => {
   );
 }
 
+FileInput.propTypes = {
+  label:PropTypes.string,
+  text:PropTypes.string,
+  id: PropTypes.string,
+};
+
 
 export default FileInput;

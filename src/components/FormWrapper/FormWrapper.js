@@ -33,7 +33,10 @@ const FormWrapper = ({children}) => {
 };
 
 FormWrapper.propTypes = {
-
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired
 };
 
 export default FormWrapper;

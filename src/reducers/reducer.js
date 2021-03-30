@@ -29,7 +29,8 @@ const initialState = {
     introduction: "",
     workDescription: "",
     hobbyDescription: ""
-  }
+  },
+  error: ""
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -60,13 +61,23 @@ const rootReducer = (state = initialState, action) => {
       };
     case ADD_POST_SUCCESS:
       return {
-        ...state
+        ...state,
+        posts: [...state.posts,action.payload.data]
       };
+    case ADD_POST_FAILED:
+      return {
+        ...state,
+        error: action.payload
+      }
     case GET_USER_SUCCESS:
       return {
         ...state,
         user: action.payload.data
       };
+    case GET_USER_FAILED:
+      return {
+        ...state
+      }
     case EDIT_USER_SUCCESS:
       return {
         ...state,

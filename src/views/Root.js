@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types'
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { CookiesProvider, withCookies } from "react-cookie";
 import {Helmet, HelmetProvider } from 'react-helmet-async'
@@ -45,6 +46,8 @@ const Root = ({ cookies }) => {
   );
 };
 
-
+Root.propTypes = {
+  cookies: PropTypes.object.isRequired
+}
 
 export default withCookies(Root);

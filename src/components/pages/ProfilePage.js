@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import MainTemplate from "../../templates/MainTemplate";
-import CheckUserAuth from "../../hoc/checkUserAuth";
+import React from "react";
+import PropTypes from 'prop-types'
 import ProfilePicture from "../profilePicture/profilePicture";
 import HeadingOne from "../Headings/HeadingOne";
 import HeadingTwo from "../Headings/HeadingTwo";
@@ -57,5 +56,19 @@ const ProfilePage = ({
     </Wrapper>
   );
 };
+
+ProfilePage.propTypes = {
+  user: PropTypes.object,
+  name: PropTypes.string,
+  lastname: PropTypes.string,
+  profileImage: PropTypes.string,
+  backgroundImage: PropTypes.string,
+  job: PropTypes.string,
+  country: PropTypes.string,
+  city: PropTypes.string,
+  introduction: PropTypes.string,
+  workDescription: PropTypes.string,
+  hobbyDescription: PropTypes.string
+}
 
 export default ProfilePage;

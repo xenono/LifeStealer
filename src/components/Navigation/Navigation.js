@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import LogoImg from "assets/Logo.svg";
 import { connect } from "react-redux";
@@ -7,7 +8,7 @@ import Button from "../Button/Button";
 import SearchBar from "../SearchBar/SearchBar";
 import Link from "components/Link/Link";
 
-import { logoutUser } from 'actions/action'
+import { logoutUser } from "actions/action";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -61,7 +62,7 @@ const LoggedOutNavigation = (
   </LoginLinksWrapper>
 );
 
-const Navigation = ({ isLoggedIn, logout}) => {
+const Navigation = ({ isLoggedIn, logout }) => {
 
   return (
     <Wrapper>
@@ -71,6 +72,7 @@ const Navigation = ({ isLoggedIn, logout}) => {
   );
 };
 
+
 const mapStateToProps = (state) => {
   const { isLoggedIn } = state;
   return { isLoggedIn };
@@ -78,8 +80,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   logout: () => dispatch(logoutUser())
-})
+});
 
+Navigation.propTypes = {
+  logout: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

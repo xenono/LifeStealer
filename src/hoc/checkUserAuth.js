@@ -3,7 +3,7 @@ import { Redirect } from 'react-router'
 import {connect } from 'react-redux'
 import { loginUser, logoutUser } from 'actions/action'
 
-const CheckUserAuth = ({ children, cookies, logout, login, isLoggedIn }) => {
+const CheckUserAuth = ({ children, cookies, logout, isLoggedIn }) => {
   const isLoggedCookie = cookies.get('isLoggedIn')
   if(isLoggedCookie === "false" || isLoggedCookie === undefined || isLoggedIn === false){
     if(isLoggedIn !== false)

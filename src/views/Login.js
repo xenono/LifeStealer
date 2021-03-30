@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import PropTypes from 'prop-types'
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
@@ -95,6 +96,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   login:() => dispatch(loginUser())
 })
-Login.propTypes = {};
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps,mapDispatchToProps)(Login);

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types'
 import styled from "styled-components";
 import Input from "../Input/Input";
 import Label from "../../Label/Label";
@@ -48,7 +49,11 @@ const UserInput = ({ label, placeholder,id, type, defaultValue }) => {
 };
 
 UserInput.propTypes = {
-
+  label:PropTypes.string,
+  placeholder:PropTypes.string,
+  id: PropTypes.string,
+  type:PropTypes.string,
+  defaultValue:PropTypes.string,
 };
 
 export default UserInput;

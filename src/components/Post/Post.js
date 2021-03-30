@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -66,7 +67,7 @@ const ReactionBar = styled.div`
   background-color: ${({bColor}) => bColor};
 `
 
-const Post = ({ title, content, image, background, creator, createdAt,profileImage }) => {
+const Post = ({ title, content, image, background, creator, createdAt}) => {
   const date = new Date(createdAt)
   return (
     <Wrapper bColor={background}>
@@ -92,7 +93,12 @@ const Post = ({ title, content, image, background, creator, createdAt,profileIma
 }
 
 Post.propTypes = {
-  
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string,
+  image: PropTypes.string.isRequired,
+  background: PropTypes.string.isRequired,
+  creator: PropTypes.object.isRequired,
+  createdAt: PropTypes.string.isRequired,
 };
 
 export default Post;

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { generateBase64FromImage } from "../utils";
 
 export const FETCH_POSTS_SUCCESS = "FETCH_POSTS_SUCCESS";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -10,12 +9,11 @@ export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
 export const ADD_POST_FAILED = "ADD_POST_FAILED";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const GET_USER_FAILED = "GET_USER_FAILED";
-export const GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS";
-export const GET_PROFILE_FAILED = "GET_PROFILE_FAILED";
 export const EDIT_USER_SUCCESS = "EDIT_USER_SUCCESS"
 export const EDIT_USER_FAILED = "EDIT_USER_FAILED"
 
-export const API_URL = process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_URL_DEV : ""
+export const API_URL = (process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_URL_DEV : "") + "/api"
+
 
 export const fetchPosts = () => async dispatch => {
   try {
@@ -49,18 +47,18 @@ export const addPost = (title, content, color, file) => async dispatch => {
         "Content-Type": "multipart/form-data"
       }
     });
-    dispatch({ type: ADD_POST_SUCCESS });
+    dispatch({ type: ADD_POST_SUCCESS, payload:post});
   } catch (err) {
     if (err.response)
       console.log(err.response.data.message);
     console.log(err);
-    dispatch({ type: ADD_POST_FAILED });
+    dispatch({ type: ADD_POST_FAILED, payload: err.response.data.message });
   }
 };
 
 export const logoutUser = () => async dispatch => {
   try {
-    const result = await axios.get(API_URL + "/logout", {
+    await axios.get(API_URL + "/logout", {
       withCredentials: true
     });
     dispatch({ type: LOGOUT_SUCCESS });

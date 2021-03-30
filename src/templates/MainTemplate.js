@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types'
 import { ThemeProvider } from "styled-components";
 
 import Navigation from "components/Navigation/Navigation";
@@ -19,6 +20,14 @@ const MainTemplate = ({ children, cookies}) => {
 
   </>
 )};
+
+MainTemplate.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
+  cookies: PropTypes.object.isRequired
+}
 
 
 export default MainTemplate;

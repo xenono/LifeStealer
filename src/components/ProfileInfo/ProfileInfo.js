@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
-import Button from 'components/Button/Button'
 
 const Wrapper = styled.div`
   width: 60%;
@@ -95,10 +95,11 @@ const ProfileInfo = ({ introContent, workContent, hobbyContent }) => {
   );
 };
 
-const mapStateToProps = ({user}) => {
-  return {
-    user
-  }
-}
+ProfileInfo.propTypes = {
+  introContent: PropTypes.string,
+  workContent: PropTypes.string,
+  hobbyContent: PropTypes.string
+};
+
 
 export default ProfileInfo;

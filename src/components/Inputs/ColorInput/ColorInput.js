@@ -26,17 +26,13 @@ const StyledLabel = styled(Label)`
 `;
 
 
-const ColorInput = ({ label, placeholder, id }) => {
+const ColorInput = () => {
   return (
     <ShortInputWrapper>
       <StyledLabel>Background color</StyledLabel>
       <StyledColorInput type="text" placeholder="Color in hexadecimal" id="color"/>
     </ShortInputWrapper>
   );
-};
-
-ColorInput.propTypes = {
-
 };
 
 export default ColorInput;

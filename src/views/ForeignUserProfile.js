@@ -3,8 +3,6 @@ import axios from 'axios'
 import PropTypes from "prop-types";
 import CheckUserAuth from "../hoc/checkUserAuth";
 import ProfilePage from "../components/pages/ProfilePage";
-import Button from "../components/Button/Button";
-import EditProfileForm from "../components/EditProfileForm/EditProfileForm";
 import MainTemplate from "../templates/MainTemplate";
 
 import {API_URL} from "../actions/action";
@@ -50,7 +48,8 @@ const ForeignUserProfile = ({ cookies, match }) => {
 };
 
 ForeignUserProfile.propTypes = {
-  
+  cookies: PropTypes.object.isRequired,
+  match: PropTypes.object
 };
 
 export default ForeignUserProfile;
