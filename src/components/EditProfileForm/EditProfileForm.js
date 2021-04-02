@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 import FormWrapper from "../FormWrapper/FormWrapper";
 import UserInput from "../Inputs/UserInput/UserInput";
 import Button from "components/Button/Button";
 import FileInput from "../Inputs/FileInput/FileInput";
 
-import { editUser as editUserAction } from "actions/action";
+import { editUser as editUserAction, RESET_FORM_DATA } from "actions/action";
+import Error from "../Error/Error";
 
 const Form = styled.form`
   width: 100%;
@@ -30,9 +32,13 @@ const ButtonWrapper = styled.div`
 const EditProfileForm = ({
                            user: { city, country, job, workDescription, introduction, hobbyDescription },
                            editUser,
-                           showEditForm
+                           error,
+                           resetFormData,
+                           successSubmission
                          }) => {
-  const handleSubmit = (e) => {
+
+  const [formSubmitted, setFormSubmission] = useState(false);
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const city = e.target.city.value;
     const country = e.target.country.value;
@@ -45,12 +51,18 @@ const EditProfileForm = ({
     const userInfo = {
       city, country, job, workDescription, introduction, hobbyDescription, profileImage, backgroundImage
     };
-    showEditForm(false);
     editUser(userInfo);
+    setFormSubmission(true);
   };
-
+  useEffect(() => {
+    resetFormData()
+  },[])
+  if (formSubmitted && !error && successSubmission) {
+    return <Redirect to="/profile" />;
+  }
   return (
     <FormWrapper>
+      {error && <Error message={error} />}
       <Form onSubmit={handleSubmit} enctype="multipart/form-data">
         <UserInput label="City" placeholder="Your city." id="city" defaultValue={city} />
         <UserInput label="Country" placeholder="Your country." id="country" defaultValue={country} />
@@ -82,11 +94,20 @@ EditProfileForm.propTypes = {
   hobbyDescription: PropTypes.string,
   editUser: PropTypes.func,
   showEditForm: PropTypes.func,
-  user: PropTypes.object
+  user: PropTypes.object,
+  error: PropTypes.string
 };
 
 const mapDispatchToProps = () => dispatch => ({
-  editUser: (userInfo) => dispatch(editUserAction(userInfo))
+  editUser: (userInfo) => dispatch(editUserAction(userInfo)),
+  resetFormData: () => dispatch({ type: RESET_FORM_DATA })
 });
 
-export default connect(null, mapDispatchToProps)(EditProfileForm);
+const mapStateToProps = ({ formData }) => {
+  return {
+    error: formData.error,
+    successSubmission: formData.successSubmission
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfileForm);

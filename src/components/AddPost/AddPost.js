@@ -1,9 +1,9 @@
-import React, {  useState } from "react";
-import PropTypes from 'prop-types'
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { addPost as addPostAction } from "actions/action";
-
+import { Redirect } from "react-router";
+import { addPost as addPostAction, RESET_FORM_DATA } from "actions/action";
 
 import Button from "components/Button/Button";
 import UserInput from "../Inputs/UserInput/UserInput";
@@ -23,71 +23,52 @@ const ButtonWrapper = styled.div`
   text-align: center;
 `;
 
-const AddPostButtonWrapper = styled.div`
-  width: 60%;
-  margin: 0 auto;
+const Form = styled.form`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
 `;
 
-const StyledButton = styled(Button)`
-  width: 100%;
-`;
-
-const AddPost = ({ addPost, error }) => {
-    const [isFormActive, setFormActive] = useState(false);
-    const handleButtonClick = () => {
-      setFormActive(!isFormActive);
-    };
-
-    const onSubmit = (e) => {
+const AddPost = ({ addPost, error, successSubmission,resetFormData }) => {
+    const [formSubmitted, setFormSubmission] = useState(false);
+    const handleSubmit = (e) => {
       e.preventDefault();
       const title = e.target.title.value;
       const content = e.target.content.value;
       const color = e.target.color.value;
       const image = e.target.file.files[0];
       addPost(title, content, color, image);
-      if(!error) {
-        setFormActive(false);
-      }
+      setFormSubmission(true);
     };
+    useEffect(() => {
+        resetFormData()
+    },[])
 
-    const Form = styled.form`
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-    `;
-
-
+    if (formSubmitted && !error && successSubmission) {
+      return <Redirect to="/" />;
+    }
     return (
       <>
-        <AddPostButtonWrapper>
-          <StyledButton onClick={handleButtonClick}>Add post</StyledButton>
-        </AddPostButtonWrapper>
-        {isFormActive && (
-          <>
-            {error && <Error message={error} />}
-            <FormWrapper>
-              <Form onSubmit={onSubmit} enctype="multipart/form-data">
-                <UserInput label="Title" placeholder="Title of your post." id="title" />
-                <UserInput label="What do you want to share?" placeholder="Content of your post." id="content"
-                           type="textarea" />
-                <FlexWrapper>
-                  <ColorInput label="Background color" placeholder="Color in hexadecimal" id="color" />
-                  <FileInput label="Image" text="Choose image" id="file" />
-                </FlexWrapper>
-                <ButtonWrapper>
-                  <Button type="submit">
-                    Publish
-                  </Button>
-                </ButtonWrapper>
-              </Form>
-            </FormWrapper>
-          </>)}
+        <FormWrapper>
+          {error && <Error message={error} />}
+          <Form onSubmit={handleSubmit} enctype="multipart/form-data">
+            <UserInput label="Title" placeholder="Title of your post." id="title" />
+            <UserInput label="What do you want to share?" placeholder="Content of your post." id="content"
+                       type="textarea" />
+            <FlexWrapper>
+              <ColorInput label="Background color" placeholder="Color in hexadecimal" id="color" defaultValue="#FFF" />
+              <FileInput label="Image" text="Choose image" id="file" />
+            </FlexWrapper>
+            <ButtonWrapper>
+              <Button type="submit">
+                Publish
+              </Button>
+            </ButtonWrapper>
+          </Form>
+        </FormWrapper>
       </>
     )
       ;
@@ -96,20 +77,23 @@ const AddPost = ({ addPost, error }) => {
 
 AddPost.propTypes = {
   addPost: PropTypes.func,
-  error: PropTypes.string
+  error: PropTypes.string,
+  successSubmission: PropTypes.bool
 }
 
 ;
 
 const mapDispatchToProps = () => dispatch => (
   {
-    addPost: (title, content, color, file) => dispatch(addPostAction(title, content, color, file))
+    addPost: (title, content, color, file) => dispatch(addPostAction(title, content, color, file)),
+    resetFormData: () => dispatch({ type : RESET_FORM_DATA })
   }
 );
-const mapStateToProps = ({ error }) => {
+const mapStateToProps = ({formData}) => {
   return {
-    error
-  };
+    error: formData.error,
+    successSubmission: formData.successSubmission
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPost);

@@ -11,7 +11,7 @@ export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const GET_USER_FAILED = "GET_USER_FAILED";
 export const EDIT_USER_SUCCESS = "EDIT_USER_SUCCESS"
 export const EDIT_USER_FAILED = "EDIT_USER_FAILED"
-
+export const RESET_FORM_DATA = "RESET_FORM_DATA"
 export const API_URL = (process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_URL_DEV : "") + "/api"
 
 
@@ -39,7 +39,7 @@ export const addPost = (title, content, color, file) => async dispatch => {
   formData.append("title", title);
   formData.append("content", content);
   formData.append("background", color);
-  formData.append("images", file);
+  formData.append("postImage", file);
   try {
     const post = await axios.post(API_URL + "/createPost", formData, {
       withCredentials: true,
@@ -105,9 +105,11 @@ export const editUser = ({
   // formData.append("profileImage", profileImage);
   // formData.append("backgroundImage", backgroundImage);
   if(backgroundImage)
-    formData.append("images", backgroundImage);
+    // formData.append("images", backgroundImage);
+    formData.append("backgroundImage", backgroundImage);
   if(profileImage)
-    formData.append("images", profileImage);
+    // formData.append("images", profileImage);
+    formData.append("profileImage", profileImage);
   try {
     const data = await axios.post(API_URL + "/editUser", formData, {
       withCredentials: true,
@@ -117,10 +119,10 @@ export const editUser = ({
     });
     dispatch({type: EDIT_USER_SUCCESS, payload: data.data})
   } catch (err) {
-    // if (err)
-    //   console.log(err.response.data.message);
+    if (err)
+      console.log(err.response.data.message);
     console.log(err);
-    dispatch({type: EDIT_USER_FAILED})
+    dispatch({type: EDIT_USER_FAILED, payload: err.response.data.message})
   }
 };
 

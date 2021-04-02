@@ -7,10 +7,11 @@ import CheckUserAuth from "hoc/checkUserAuth";
 import { connect } from "react-redux";
 
 import Post from "components/Post/Post";
+import Button from "components/Button/Button"
+import Link from 'components/Link/Link'
 import MainTemplate from "../templates/MainTemplate";
 
 import { fetchPosts as fetchPostsAction } from "actions/action";
-import AddPost from "../components/AddPost/AddPost";
 
 
 const PostWrapper = styled.div`
@@ -20,6 +21,16 @@ const PostWrapper = styled.div`
   align-items: center;
 `;
 
+const StyledButton = styled(Button)`
+  width: 60%;
+  text-align: center;
+  color: #fff;
+  font-size: 36px;
+  font-weight: 500;
+&:hover{
+  color: #fff;
+}
+`
 
 const Dashboard = ({ cookies, posts, fetchPosts }) => {
 
@@ -31,7 +42,7 @@ const Dashboard = ({ cookies, posts, fetchPosts }) => {
   return (
     <MainTemplate cookies={cookies}>
       <CheckUserAuth cookies={cookies}>
-        <AddPost />
+        <StyledButton as={Link} to="/addPost"> Add Post </StyledButton>
         <PostWrapper>
           {posts.length > 0? posts.slice(0).reverse().map(post => (
             <Post {...post} key={post.createdAt}/>

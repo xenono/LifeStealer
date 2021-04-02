@@ -8,7 +8,7 @@ import {
   ADD_POST_FAILED,
   ADD_POST_SUCCESS,
   GET_USER_SUCCESS,
-  GET_USER_FAILED, EDIT_USER_SUCCESS
+  GET_USER_FAILED, EDIT_USER_SUCCESS, EDIT_USER_FAILED,RESET_FORM_DATA
 } from "actions/action";
 
 const cookies = new Cookies();
@@ -30,7 +30,10 @@ const initialState = {
     workDescription: "",
     hobbyDescription: ""
   },
-  error: ""
+  formData : {
+    error: "",
+    successSubmission: false
+  }
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -62,12 +65,19 @@ const rootReducer = (state = initialState, action) => {
     case ADD_POST_SUCCESS:
       return {
         ...state,
-        posts: [...state.posts,action.payload.data]
+        posts: [...state.posts,action.payload.data],
+        formData : {
+          error: '',
+          successSubmission: true
+        }
       };
     case ADD_POST_FAILED:
       return {
         ...state,
-        error: action.payload
+        formData : {
+          error: action.payload,
+          successSubmission: false
+        }
       }
     case GET_USER_SUCCESS:
       return {
@@ -81,7 +91,27 @@ const rootReducer = (state = initialState, action) => {
     case EDIT_USER_SUCCESS:
       return {
         ...state,
-        user: {...action.payload}
+        user: {...action.payload},
+        formData : {
+          error: '',
+          successSubmission: true
+        }
+      }
+    case EDIT_USER_FAILED:
+      return {
+        ...state,
+        formData : {
+          error: action.payload,
+          successSubmission: false
+        }
+      }
+    case RESET_FORM_DATA:
+      return {
+        ...state,
+        formData : {
+          error: '',
+          successSubmission: false
+        }
       }
     default:
       return {

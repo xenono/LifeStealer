@@ -1,5 +1,6 @@
 import React from "react";
-import styled from 'styled-components'
+import styled from "styled-components";
+import PropTypes from "prop-types";
 import Input from "../Input/Input";
 import Label from "../../Label/Label";
 
@@ -26,13 +27,17 @@ const StyledLabel = styled(Label)`
 `;
 
 
-const ColorInput = () => {
+const ColorInput = ({ defaultValue }) => {
   return (
     <ShortInputWrapper>
       <StyledLabel>Background color</StyledLabel>
-      <StyledColorInput type="text" placeholder="Color in hexadecimal" id="color"/>
+      <StyledColorInput type="text" placeholder="Color in hexadecimal" id="color" defaultValue={defaultValue} />
     </ShortInputWrapper>
   );
+};
+
+ColorInput.propTypes = {
+  defaultValue: PropTypes.string
 };
 
 export default ColorInput;

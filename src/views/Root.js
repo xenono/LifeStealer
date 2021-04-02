@@ -14,9 +14,12 @@ import Dashboard from "./Dashboard";
 import Profile from "./Profile";
 import Login from './Login'
 import Signup from './Signup'
+import PageNotFound404 from "./PageNotFound404";
 
 import GlobalStyle from "../theme/GlobalStyle";
 import ForeignUserProfile from "./ForeignUserProfile";
+import AddDashboardPost from "./AddDashboardPost";
+import EditProfile from "./EditProfile";
 
 
 const Root = ({ cookies }) => {
@@ -33,10 +36,13 @@ const Root = ({ cookies }) => {
             </Helmet>
               <Switch>
                 <Route exact path="/" render={props => <Dashboard {...props} cookies={cookies}/>} />
-                <Route exact  path="/profile" render={props => <Profile {...props} cookies={cookies}/>} />
+                <Route path="/addPost" render={props => <AddDashboardPost {...props} cookies={cookies}/>} />
+                <Route path="/editProfile" render={props => <EditProfile {...props} cookies={cookies}/>} />
+                <Route exact path="/profile" render={props => <Profile {...props} cookies={cookies}/>} />
                 <Route path="/profile/:userId" render={props => <ForeignUserProfile {...props} cookies={cookies}/>}/>
                 <Route path="/login" render={props => <Login {...props} cookies={cookies}/>} />
                 <Route path="/signup" render={props => <Signup {...props} cookies={cookies}/>} />
+                <Route render={props => <PageNotFound404  {...props} cookies={cookies}/>}/>
               </Switch>
           </BrowserRouter>
           <GlobalStyle/>
