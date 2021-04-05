@@ -68,7 +68,7 @@ const Login = ({ isLoggedIn, login }) => {
     return <Redirect to="/" />;
   }
   return (
-    <MainTemplate >
+    <MainTemplate cookies={{}}>
       <Wrapper>
         <FormWrapper>
           <HeadingOne color="#000">Sign in to Lifestealer</HeadingOne>

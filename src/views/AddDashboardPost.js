@@ -6,23 +6,24 @@ import CheckUserAuth from "../hoc/checkUserAuth";
 import AddPost from 'components/AddPost/AddPost'
 
 const Wrapper = styled.div`
-  margin-top: 30px;
+  min-height: calc(100vh - 91px - 120px);
+  margin: 60px 0 ;
 `
 
-const AddDashboardPost = ({ cookies }) => {
-  return (
-    <MainTemplate cookies={cookies}>
-      <CheckUserAuth cookies={cookies}>
-        <Wrapper>
-          <AddPost />
-        </Wrapper>
-      </CheckUserAuth>
-    </MainTemplate>
-  );
+const AddDashboardPost = ({cookies}) => {
+	return (
+		<MainTemplate cookies={cookies}>
+			<CheckUserAuth cookies={cookies}>
+				<Wrapper>
+					<AddPost/>
+				</Wrapper>
+			</CheckUserAuth>
+		</MainTemplate>
+	);
 };
 
 AddDashboardPost.propTypes = {
-  cookies: PropTypes.object.isRequired
+	cookies: PropTypes.object.isRequired
 };
 
 export default AddDashboardPost;

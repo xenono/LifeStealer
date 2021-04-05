@@ -22,7 +22,7 @@ const PostWrapper = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  width: 60%;
+  width: 50%;
   text-align: center;
   color: #fff;
   font-size: 36px;
@@ -36,7 +36,7 @@ const Dashboard = ({ cookies, posts, fetchPosts }) => {
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [posts]);
 
   posts = posts ? posts : [];
   return (

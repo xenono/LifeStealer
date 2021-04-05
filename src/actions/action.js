@@ -12,6 +12,12 @@ export const GET_USER_FAILED = "GET_USER_FAILED";
 export const EDIT_USER_SUCCESS = "EDIT_USER_SUCCESS"
 export const EDIT_USER_FAILED = "EDIT_USER_FAILED"
 export const RESET_FORM_DATA = "RESET_FORM_DATA"
+export const DROP_BLOOD_SUCCESS = "DROP_BLOOD_SUCCESS"
+export const DROP_BLOOD_FAILED = "DROP_BLOOD_FAILED"
+export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS"
+export const ADD_COMMENT_FAILED = "ADD_COMMENT_FAILED"
+
+
 export const API_URL = (process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_URL_DEV : "") + "/api"
 
 
@@ -125,5 +131,33 @@ export const editUser = ({
     dispatch({type: EDIT_USER_FAILED, payload: err.response.data.message})
   }
 };
+
+export const dropABlood = (postId, isActive) => async dispatch => {
+  try {
+    await axios.post(API_URL + "/dropABlood",{postId, isActive},{
+      withCredentials: true
+    })
+    dispatch({type: DROP_BLOOD_SUCCESS, payload: {postId,isActive} })
+  } catch (err){
+    if (err)
+      console.log(err.response.data.message);
+    console.log(err);
+    dispatch({type: DROP_BLOOD_FAILED, payload: err.response.data.message})
+  }
+}
+
+export const addComment = (postId, text) => async dispatch => {
+  try {
+    const comment = await axios.post(API_URL + "/addComment", {postId, text}, {
+      withCredentials: true
+    })
+    dispatch({type: ADD_COMMENT_SUCCESS, payload: {postId,comment} })
+  } catch (err) {
+    if (err && err.response)
+      console.log(err.response.data.message);
+    console.log(err);
+    dispatch({type: ADD_COMMENT_FAILED, payload: err})
+  }
+}
 
 

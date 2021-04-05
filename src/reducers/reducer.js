@@ -8,7 +8,14 @@ import {
   ADD_POST_FAILED,
   ADD_POST_SUCCESS,
   GET_USER_SUCCESS,
-  GET_USER_FAILED, EDIT_USER_SUCCESS, EDIT_USER_FAILED,RESET_FORM_DATA
+  GET_USER_FAILED,
+  EDIT_USER_SUCCESS,
+  EDIT_USER_FAILED,
+  RESET_FORM_DATA,
+  DROP_BLOOD_SUCCESS,
+  DROP_BLOOD_FAILED,
+  ADD_COMMENT_FAILED,
+  ADD_COMMENT_SUCCESS
 } from "actions/action";
 
 const cookies = new Cookies();
@@ -112,6 +119,41 @@ const rootReducer = (state = initialState, action) => {
           error: '',
           successSubmission: false
         }
+      }
+    case DROP_BLOOD_SUCCESS:
+      return {
+        ...state,
+        posts: state.posts.map(post => {
+          if(post._id === action.payload.postId){
+            if(action.payload.isActive){
+              post.usersBlood += 1
+              post.isUserBlood = true
+            }
+            else {
+              post.usersBlood -= 1
+              post.isUserBlood = false
+            }
+          }
+          return post
+        })
+      }
+    case DROP_BLOOD_FAILED:
+      return {
+        ...state,
+      }
+    case ADD_COMMENT_SUCCESS:
+      return {
+        ...state,
+        posts: state.posts.map(post => {
+          if(post._id === action.payload.postId){
+            post.comments.push(action.payload.comment.data)
+          }
+          return post
+        })
+      }
+    case ADD_COMMENT_FAILED:
+      return {
+        ...state,
       }
     default:
       return {

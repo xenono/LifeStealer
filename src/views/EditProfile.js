@@ -8,7 +8,7 @@ import EditProfileForm from "../components/EditProfileForm/EditProfileForm";
 
 
 const Wrapper = styled.div`
-  margin-top: 30px;
+  margin: 60px 0;
 `
 
 const EditProfile = ({ cookies,user }) => {
