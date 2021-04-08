@@ -16,6 +16,10 @@ export const DROP_BLOOD_SUCCESS = "DROP_BLOOD_SUCCESS"
 export const DROP_BLOOD_FAILED = "DROP_BLOOD_FAILED"
 export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS"
 export const ADD_COMMENT_FAILED = "ADD_COMMENT_FAILED"
+export const ADD_FRIEND_SUCCESS = "ADD_FRIEND_SUCCESS"
+export const ADD_FRIEND_FAILED = "ADD_FRIEND_FAILED"
+export const GET_FRIENDS_SUCCESS = "GET_FRIENDS_SUCCESS"
+export const GET_FRIENDS_FAILED = "GET_FRIENDS_FAILED"
 
 
 export const API_URL = (process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_URL_DEV : "") + "/api"
@@ -160,4 +164,28 @@ export const addComment = (postId, text) => async dispatch => {
   }
 }
 
+export const addFriend = (userId) => async dispatch => {
+  try {
+    const addedUser = await axios.post(API_URL + "/addFriend", {
+      userId
+    },{withCredentials: true})
+    dispatch({type: ADD_FRIEND_SUCCESS, payload: {addedUser} })
+  }catch(err){
+    if (err && err.response)
+      console.log(err.response.data.message);
+    console.log(err);
+    dispatch({type: ADD_FRIEND_FAILED, payload: err})
+  }
+}
 
+export const getFriends = () => async dispatch => {
+  try {
+    const friends = await axios.get(API_URL + "/getFriends",{withCredentials: true})
+    dispatch({type: GET_FRIENDS_SUCCESS, payload: friends})
+  } catch(err) {
+    if (err && err.response)
+      console.log(err.response.data.message);
+    console.log(err);
+    dispatch({type: GET_FRIENDS_FAILED, payload: err})
+  }
+}

@@ -39,7 +39,7 @@ const Root = ({ cookies }) => {
                 <Route path="/addPost" render={props => <AddDashboardPost {...props} cookies={cookies}/>} />
                 <Route path="/editProfile" render={props => <EditProfile {...props} cookies={cookies}/>} />
                 <Route exact path="/profile" render={props => <Profile {...props} cookies={cookies}/>} />
-                <Route path="/profile/:userId" render={props => <ForeignUserProfile {...props} cookies={cookies}/>}/>
+                <Route exact path="/profile/:userId" render={props => <ForeignUserProfile {...props} cookies={cookies}/>}/>
                 <Route path="/login" render={props => <Login {...props} cookies={cookies}/>} />
                 <Route path="/signup" render={props => <Signup {...props} cookies={cookies}/>} />
                 <Route render={props => <PageNotFound404  {...props} cookies={cookies}/>}/>

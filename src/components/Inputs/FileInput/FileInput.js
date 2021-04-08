@@ -37,6 +37,8 @@ const FileInputText = styled.span`
 const StyledLabel = styled(Label)`
   text-align: center;
   font-size: 2.25rem;
+  width: 100%;
+  height: 100%;
 `;
 
 const StyledInput = styled(Input)`
@@ -51,11 +53,21 @@ const StyledInput = styled(Input)`
   &:hover {
     cursor: pointer;
   }
+  color: ${({theme}) => theme.primary};
 
   &::-webkit-file-upload-button {
-    visibility: hidden;
+    z-index: 999;
+    //visibility: hidden;
+    color: ${({theme}) => theme.primary};
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
+    height: 64px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 
@@ -79,7 +91,7 @@ const FileInput = ({label, id ,text}) => {
       <InputWrapper>
         <StyledInput type="file" id={id} ref={fileInput} />
         <FileInputText as={Label}
-                       htmlFor="file"> {filename.length > 0 ? filename : text}</FileInputText>
+                       htmlFor={id}> {filename.length > 0 ? filename : text}</FileInputText>
       </InputWrapper>
     </ShortInputWrapper>
   );

@@ -9,7 +9,7 @@ import EditProfileForm from "components/EditProfileForm/EditProfileForm";
 
 import { getUser as getUserAction } from "actions/action";
 import Button from "../components/Button/Button";
-import ProfilePage from "../components/pages/ProfilePage";
+import ProfilePage from "../pages/ProfilePage";
 import Link from "../components/Link/Link";
 
 
@@ -32,8 +32,8 @@ const Profile = ({ cookies, getUser, user}) => {
     <MainTemplate cookies={cookies}>
       <CheckUserAuth cookies={cookies}>
         <ProfilePage user={user} />
+        <StyledButton as={Link} to="/editProfile"> Edit your profile </StyledButton>
       </CheckUserAuth>
-      <StyledButton as={Link} to="/editProfile"> Edit your profile </StyledButton>
     </MainTemplate>
   );
 };

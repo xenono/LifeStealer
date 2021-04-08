@@ -12,17 +12,11 @@ import Link from 'components/Link/Link'
 import MainTemplate from "../templates/MainTemplate";
 
 import { fetchPosts as fetchPostsAction } from "actions/action";
+import FriendsList from "../components/FriendsList/FriendsList";
 
-
-const PostWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 
 const StyledButton = styled(Button)`
-  width: 50%;
+  width: 100%;
   text-align: center;
   color: #fff;
   font-size: 36px;
@@ -30,6 +24,17 @@ const StyledButton = styled(Button)`
 &:hover{
   color: #fff;
 }
+`
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr fit-content(50%) 1fr;
+  grid-column-gap: 5.5%;
+`
+
+const PostWrapper = styled.div`
+  grid-column-start: 2;
+  grid-column-end: 3;
 `
 
 const Dashboard = ({ cookies, posts, fetchPosts }) => {
@@ -42,12 +47,16 @@ const Dashboard = ({ cookies, posts, fetchPosts }) => {
   return (
     <MainTemplate cookies={cookies}>
       <CheckUserAuth cookies={cookies}>
-        <StyledButton as={Link} to="/addPost"> Add Post </StyledButton>
-        <PostWrapper>
-          {posts.length > 0? posts.slice(0).reverse().map(post => (
-            <Post {...post} key={post.createdAt}/>
-          )) : <p>no posts</p>}
-        </PostWrapper>
+        <Grid>
+          <div/>
+          <PostWrapper>
+            <StyledButton as={Link} to="/addPost"> Add Post </StyledButton>
+              {posts.length > 0? posts.slice(0).reverse().map(post => (
+                <Post {...post} key={post.createdAt}/>
+              )) : <p>no posts</p>}
+          </PostWrapper>
+          <FriendsList/>
+        </Grid>
       </CheckUserAuth>
     </MainTemplate>
   );

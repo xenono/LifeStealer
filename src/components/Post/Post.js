@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import PostReactionBar from "../PostReactionBar/PostReactionBar";
+import Link from "../Link/Link";
 
 const Wrapper = styled.div`
-  width: 50%;
+  width: 100%;
   background-color: ${({ bColor }) => bColor};
   padding: 0;
   display: flex;
@@ -25,7 +26,14 @@ const Heading = styled.h1`
 `;
 const Paragraph = styled.p`
   font-size: 2.1rem;
+  
 `;
+
+const Name = styled(Paragraph)`
+  &:hover{
+    text-decoration: underline;
+  }
+`
 
 const Span = styled.span`
   margin-left: 15px;
@@ -72,7 +80,7 @@ const Post = ({ title, content, image, background, creator, createdAt, usersBloo
         <PostInfoWrapper>
           <UserInfoWrapper>
             <ProfileCircle src={creator.profileImage} />
-            <Paragraph>{creator.name} {creator.lastname}</Paragraph>
+            <Name as={Link} to={"/profile/" + creator.userId}>{creator.name} {creator.lastname}</Name>
           </UserInfoWrapper>
           <TimeInfoWrapper>
             <Paragraph>{date.getHours()}:{date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}<Span>{date.getDay()}/{date.getMonth()}/{date.getFullYear()}</Span></Paragraph>

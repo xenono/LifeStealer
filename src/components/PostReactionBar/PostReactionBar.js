@@ -113,7 +113,6 @@ const CommentInput = styled.textarea`
   outline: none;
   border: 0;
   padding: 5px 15px;
-  border-radius: 10px;
   margin-bottom: 10px;
   word-wrap: anywhere;
 `;

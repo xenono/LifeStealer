@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios'
+import { Redirect } from "react-router";
 import PropTypes from "prop-types";
 import CheckUserAuth from "../hoc/checkUserAuth";
-import ProfilePage from "../components/pages/ProfilePage";
+import ProfilePage from "../pages/ProfilePage";
 import MainTemplate from "../templates/MainTemplate";
 
 import {API_URL} from "../actions/action";
@@ -19,29 +20,33 @@ const ForeignUserProfile = ({ cookies, match }) => {
     city: "",
     introduction: "",
     workDescription: "",
-    hobbyDescription: ""
+    hobbyDescription: "",
+    friendsList: []
   })
-
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     const getProfile = async () => {
-      const user = await axios.get(API_URL + "/getProfile/" + userId,{withCredentials: true})
-      setUser(user.data)
-    }
-    try {
-      getProfile()
-    } catch(err){
-      console.log(err)
-      if(err.response){
-        console.log(err.response.message)
+      try {
+        const user = await axios.get(API_URL + "/getProfile/" + userId,{withCredentials: true})
+        setUser(user.data)
+      } catch(err){
+        if(err.response.data.message === "This is logged user"){
+          setError(true)
+        }
       }
-    }
 
-  },[])
+    }
+    getProfile()
+  },[userId,error])
+
+  if(error){
+    return <Redirect to='/profile'/>
+  }
   return (
     <MainTemplate cookies={cookies}>
       <CheckUserAuth cookies={cookies}>
-        <ProfilePage user={user}/>
+        <ProfilePage user={user} userId={userId}/>
       </CheckUserAuth>
     </MainTemplate>
   );

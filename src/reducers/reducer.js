@@ -15,7 +15,10 @@ import {
   DROP_BLOOD_SUCCESS,
   DROP_BLOOD_FAILED,
   ADD_COMMENT_FAILED,
-  ADD_COMMENT_SUCCESS
+  ADD_FRIEND_FAILED,
+  ADD_COMMENT_SUCCESS, ADD_FRIEND_SUCCESS,
+  GET_FRIENDS_SUCCESS,
+  GET_FRIENDS_FAILED
 } from "actions/action";
 
 const cookies = new Cookies();
@@ -35,9 +38,10 @@ const initialState = {
     backgroundImage: "",
     introduction: "",
     workDescription: "",
-    hobbyDescription: ""
+    hobbyDescription: "",
+    friendsList: []
   },
-  formData : {
+  formData: {
     error: "",
     successSubmission: false
   }
@@ -72,20 +76,20 @@ const rootReducer = (state = initialState, action) => {
     case ADD_POST_SUCCESS:
       return {
         ...state,
-        posts: [...state.posts,action.payload.data],
-        formData : {
-          error: '',
+        posts: [...state.posts, action.payload.data],
+        formData: {
+          error: "",
           successSubmission: true
         }
       };
     case ADD_POST_FAILED:
       return {
         ...state,
-        formData : {
+        formData: {
           error: action.payload,
           successSubmission: false
         }
-      }
+      };
     case GET_USER_SUCCESS:
       return {
         ...state,
@@ -94,67 +98,90 @@ const rootReducer = (state = initialState, action) => {
     case GET_USER_FAILED:
       return {
         ...state
-      }
+      };
     case EDIT_USER_SUCCESS:
       return {
         ...state,
-        user: {...action.payload},
-        formData : {
-          error: '',
+        user: { ...action.payload },
+        formData: {
+          error: "",
           successSubmission: true
         }
-      }
+      };
     case EDIT_USER_FAILED:
       return {
         ...state,
-        formData : {
+        formData: {
           error: action.payload,
           successSubmission: false
         }
-      }
+      };
     case RESET_FORM_DATA:
       return {
         ...state,
-        formData : {
-          error: '',
+        formData: {
+          error: "",
           successSubmission: false
         }
-      }
+      };
     case DROP_BLOOD_SUCCESS:
       return {
         ...state,
         posts: state.posts.map(post => {
-          if(post._id === action.payload.postId){
-            if(action.payload.isActive){
-              post.usersBlood += 1
-              post.isUserBlood = true
-            }
-            else {
-              post.usersBlood -= 1
-              post.isUserBlood = false
+          if (post._id === action.payload.postId) {
+            if (action.payload.isActive) {
+              post.usersBlood += 1;
+              post.isUserBlood = true;
+            } else {
+              post.usersBlood -= 1;
+              post.isUserBlood = false;
             }
           }
-          return post
+          return post;
         })
-      }
+      };
     case DROP_BLOOD_FAILED:
       return {
-        ...state,
-      }
+        ...state
+      };
     case ADD_COMMENT_SUCCESS:
       return {
         ...state,
         posts: state.posts.map(post => {
-          if(post._id === action.payload.postId){
-            post.comments.push(action.payload.comment.data)
+          if (post._id === action.payload.postId) {
+            post.comments.push(action.payload.comment.data);
           }
-          return post
+          return post;
         })
-      }
+      };
     case ADD_COMMENT_FAILED:
       return {
+        ...state
+      };
+    case ADD_FRIEND_SUCCESS:
+      return {
         ...state,
+        user: {
+          ...state.user,
+          friendsList: [...state.user.friendsList, action.payload.data]
+        }
+      };
+    case ADD_FRIEND_FAILED:
+      return {
+        ...state
+      };
+    case GET_FRIENDS_SUCCESS:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          friendsList: action.payload.data
+        }
       }
+    case GET_FRIENDS_FAILED:
+      return {
+        ...state
+      };
     default:
       return {
         ...state
