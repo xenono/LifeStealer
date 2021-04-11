@@ -1,12 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { dropABlood as dropABloodAction, addComment as addCommentAction } from "actions/action";
+import { dropABlood as dropABloodAction } from "actions/action";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import ProfilePicture from "../profilePicture/profilePicture";
+import CommentsList from "components/CommentsList/CommentsList";
 import Button from "../Button/Button";
-import ArrowIcon from 'assets/arrow.svg'
-
 
 const Wrapper = styled.div`
   width: 100%;
@@ -62,100 +60,18 @@ const Icon = styled.div`
   height: 40px;
 `;
 
-const CommentsList = styled.ul`
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 20px 30px;
-  list-style: none;
-  border: 2px solid black;
-  background-color: ${({ theme }) => theme.tertiary};
-`;
 
-const Comment = styled.li`
-  //width: 100%;
-  background-color: #dbd9d3;
-  border-radius: 10px;
-  white-space: normal;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 10px;
-  margin-bottom: 5px;
-`;
-
-const Text = styled.p`
-  max-width: 100%;
-  font-size: 1.5rem;
-  margin: 0 0 0 10px;
-  word-wrap: anywhere;
-`;
-
-const Span = styled.span`
-  font-size: 1.5rem;
-  display: block;
-  font-weight: bold;
-`;
-
-const StyledProfilePicture = styled(ProfilePicture)`
-  width: 40px;
-  height: 40px;
-  border: 0;
-  align-self: flex-start;
-`;
-
-const CommentInput = styled.textarea`
-  width: calc(100% - 140px);
-  max-width: calc(100% - 140px);
-  min-width: calc(100% - 140px);
-  min-height: 40px;
-  max-height: 75px;
-  outline: none;
-  border: 0;
-  padding: 5px 15px;
-  margin-bottom: 10px;
-  word-wrap: anywhere;
-`;
-
-const SendButton = styled(Button)`
-  width: 140px;
-  height: 40px;
-  outline: none;
-  border: none;
-  padding: 0;
-  background-size: contain;
-  margin: auto auto 10px auto;
-  font-size: 20px;
-  &:hover{
-    cursor: pointer;
-    background-color: ${({theme}) => theme.primary};
-    opacity: 0.8;
-  }
-;
-`
-
-const Form = styled.form`
-  display: flex;
-  position: relative;
-`;
-
-const PostReactionBar = ({ usersBlood, isUserBlood, _id, dropABlood, comments, addComment }) => {
+const PostReactionBar = ({ usersBlood, isUserBlood, _id, dropABlood,comments}) => {
   const [wasBloodLeft, setBloodLevel] = useState(false);
   const [areCommentsActive, setComments] = useState(false);
   const handleTearClick = () => {
     setBloodLevel(!wasBloodLeft);
     dropABlood(_id, !wasBloodLeft);
   };
-
   useEffect(() => {
     setBloodLevel(isUserBlood);
   }, [isUserBlood]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addComment(_id, e.target.comment.value);
-    e.target.comment.value = "";
-  };
 
   return (
     <>
@@ -178,7 +94,7 @@ const PostReactionBar = ({ usersBlood, isUserBlood, _id, dropABlood, comments, a
           <span>{wasBloodLeft ? "Bloody" : "Drop a blood"}</span>
         </TearButton>
         <CommentButton onClick={() => setComments(!areCommentsActive)} areCommentsActive={areCommentsActive}>
-          <span>{comments.length}</span>
+          {/*<span>{comments && comments.length}</span>*/}
           <Icon>
             <svg width="40" height="40" viewBox="0 0 682 682" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -192,18 +108,7 @@ const PostReactionBar = ({ usersBlood, isUserBlood, _id, dropABlood, comments, a
           <span>Comment</span></CommentButton>
       </Wrapper>
 
-      {areCommentsActive && <CommentsList>
-        <Form onSubmit={handleSubmit}>
-          <CommentInput name="comment" id="comment" placeholder="Add your comment" type="textarea"/>
-          <SendButton type="submit">Comment</SendButton>
-        </Form>
-        {comments.slice(0).reverse().map((comment, index) => (
-          <Comment key={index}>
-            <StyledProfilePicture src={comment.author.profileImage} />
-            <Text><Span>{comment.author.name} {comment.author.lastname}</Span>{comment.text}</Text>
-          </Comment>
-        ))}
-      </CommentsList>}
+      {areCommentsActive && <CommentsList _id={_id} />}
     </>
   );
 };
@@ -216,9 +121,11 @@ PostReactionBar.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.object)
 };
 
+
+
 const mapDispatchToProps = dispatch => ({
   dropABlood: (postId, blood) => dispatch(dropABloodAction(postId, blood)),
-  addComment: (postId, text) => dispatch(addCommentAction(postId, text))
 });
+
 
 export default connect(null, mapDispatchToProps)(PostReactionBar);

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router'
 import {connect } from 'react-redux'
 import { loginUser, logoutUser } from 'actions/action'
 
-const CheckUserAuth = ({ children, cookies, logout, isLoggedIn }) => {
+const CheckUserAuth = ({ children, cookies, logout, isLoggedIn,requestError }) => {
   const isLoggedCookie = cookies.get('isLoggedIn')
   if(isLoggedCookie === "false" || isLoggedCookie === undefined || isLoggedIn === false){
     if(isLoggedIn !== false)
@@ -13,8 +13,8 @@ const CheckUserAuth = ({ children, cookies, logout, isLoggedIn }) => {
   return children
 };
 
-const mapStateToProps = ({ isLoggedIn }) => ({
-  isLoggedIn
+const mapStateToProps = ({ isLoggedIn,requestError }) => ({
+  isLoggedIn,requestError
 })
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logoutUser()),

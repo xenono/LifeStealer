@@ -41,9 +41,8 @@ const Dashboard = ({ cookies, posts, fetchPosts }) => {
 
   useEffect(() => {
     fetchPosts();
-  }, [posts]);
+  }, []);
 
-  posts = posts ? posts : [];
   return (
     <MainTemplate cookies={cookies}>
       <CheckUserAuth cookies={cookies}>
@@ -51,7 +50,7 @@ const Dashboard = ({ cookies, posts, fetchPosts }) => {
           <div/>
           <PostWrapper>
             <StyledButton as={Link} to="/addPost"> Add Post </StyledButton>
-              {posts.length > 0? posts.slice(0).reverse().map(post => (
+              {posts && posts.length > 0? posts.slice(0).reverse().map(post => (
                 <Post {...post} key={post.createdAt}/>
               )) : <p>no posts</p>}
           </PostWrapper>

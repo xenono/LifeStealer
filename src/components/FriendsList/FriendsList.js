@@ -57,7 +57,7 @@ const FriendsList = ({ getFriends, friendsList }) => {
 
   useEffect(() => {
     getFriends();
-  }, [friendsList]);
+  }, []);
   return (
     <StickyWrapper>
       <Heading>Your friends</Heading>

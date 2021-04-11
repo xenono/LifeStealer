@@ -1,6 +1,7 @@
 import Cookies from "universal-cookie";
 import {
   FETCH_POSTS_SUCCESS,
+  FETCH_POSTS_FAILED,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   LOGIN_FAILED,
@@ -44,7 +45,8 @@ const initialState = {
   formData: {
     error: "",
     successSubmission: false
-  }
+  },
+  requestError: ""
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -54,6 +56,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         posts: action.payload.posts
       };
+    case FETCH_POSTS_FAILED:
+      return {
+        ...state,
+        requestError: action.payload
+      }
     case LOGOUT_SUCCESS:
       return {
         ...state,

@@ -72,7 +72,7 @@ const ProfileCircle = styled.img`
 `;
 
 
-const Post = ({ title, content, image, background, creator, createdAt, usersBlood, isUserBlood, _id, comments }) => {
+const Post = ({ title, content, image, background, creator, createdAt, usersBlood, isUserBlood, _id}) => {
   const date = new Date(createdAt);
   return (
     <Wrapper bColor={background}>
@@ -92,7 +92,7 @@ const Post = ({ title, content, image, background, creator, createdAt, usersBloo
         </div>
       </ContentWrapper>
       <Image src={image} alt="" />
-      <PostReactionBar usersBlood={usersBlood} isUserBlood={isUserBlood} _id={_id} comments={comments} />
+      <PostReactionBar usersBlood={usersBlood} isUserBlood={isUserBlood} _id={_id} />
 
     </Wrapper>
   )
