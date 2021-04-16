@@ -19,7 +19,8 @@ import {
   ADD_FRIEND_FAILED,
   ADD_COMMENT_SUCCESS, ADD_FRIEND_SUCCESS,
   GET_FRIENDS_SUCCESS,
-  GET_FRIENDS_FAILED
+  GET_FRIENDS_FAILED,
+  OPEN_CHATBOX
 } from "actions/action";
 
 const cookies = new Cookies();
@@ -29,6 +30,7 @@ const isLoggedInByCookie = cookies.get("isLoggedIn") === "true";
 const initialState = {
   isLoggedIn: isLoggedInByCookie,
   posts: [],
+  activeChats: [],
   user: {
     name: "",
     lastname: "",
@@ -189,6 +191,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state
       };
+    case OPEN_CHATBOX: {
+      return {
+        ...state,
+        activeChats: state.activeChats.find(i => i.member.name === action.payload.name) ? state.activeChats : [...state.activeChats, {member: {name : action.payload.name, lastname: action.payload.lastname, profileImage: action.payload.profileImage}}]
+      };
+    }
     default:
       return {
         ...state

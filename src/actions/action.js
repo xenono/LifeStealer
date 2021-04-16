@@ -21,6 +21,7 @@ export const ADD_FRIEND_SUCCESS = "ADD_FRIEND_SUCCESS";
 export const ADD_FRIEND_FAILED = "ADD_FRIEND_FAILED";
 export const GET_FRIENDS_SUCCESS = "GET_FRIENDS_SUCCESS";
 export const GET_FRIENDS_FAILED = "GET_FRIENDS_FAILED";
+export const OPEN_CHATBOX = "OPEN_CHATBOX"
 
 
 export const API_URL = (process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_URL_DEV : "") + "/api";

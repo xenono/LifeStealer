@@ -13,6 +13,7 @@ import MainTemplate from "../templates/MainTemplate";
 
 import { fetchPosts as fetchPostsAction } from "actions/action";
 import FriendsList from "../components/FriendsList/FriendsList";
+import Chats from "../components/Chats/Chats";
 
 
 const StyledButton = styled(Button)`
@@ -27,9 +28,10 @@ const StyledButton = styled(Button)`
 `
 
 const Grid = styled.div`
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr fit-content(50%) 1fr;
-  grid-column-gap: 5.5%;
+  grid-template-columns:  22.5% 47.5% 22.5%;
+  grid-column-gap: 2.5%;
 `
 
 const PostWrapper = styled.div`
@@ -47,7 +49,7 @@ const Dashboard = ({ cookies, posts, fetchPosts }) => {
     <MainTemplate cookies={cookies}>
       <CheckUserAuth cookies={cookies}>
         <Grid>
-          <div/>
+          <Chats />
           <PostWrapper>
             <StyledButton as={Link} to="/addPost"> Add Post </StyledButton>
               {posts && posts.length > 0? posts.slice(0).reverse().map(post => (

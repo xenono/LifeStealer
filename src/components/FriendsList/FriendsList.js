@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import { getFriends as getFriendsAction } from "actions/action";
+import { getFriends as getFriendsAction, OPEN_CHATBOX } from "actions/action";
 import ProfilePicture from "../profilePicture/profilePicture";
 import HeadingOne from "../Headings/HeadingOne";
 
@@ -53,8 +53,11 @@ const Heading = styled.h1`
   margin: 0;
   border-bottom: 2px solid ${({ theme }) => theme.tertiary};
 `
-const FriendsList = ({ getFriends, friendsList }) => {
+const FriendsList = ({ getFriends, friendsList, openChatbox }) => {
 
+  const handleFriendClick = (friend) => {
+    openChatbox(friend)
+  }
   useEffect(() => {
     getFriends();
   }, []);
@@ -63,7 +66,7 @@ const FriendsList = ({ getFriends, friendsList }) => {
       <Heading>Your friends</Heading>
       <FriendsUl>
         {friendsList ? friendsList.map((friend, index) => (
-            <FriendLi key={index}>
+            <FriendLi key={index} onClick={() => handleFriendClick(friend)}>
               <StyledProfilePicture src={friend.profileImage}/>
               <Paragraph>{friend.name} {friend.lastname}</Paragraph>
             </FriendLi>
@@ -80,12 +83,14 @@ const mapStateToProps = ({ user }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getFriends: () => dispatch(getFriendsAction())
+  getFriends: () => dispatch(getFriendsAction()),
+  openChatbox: (friend) => dispatch({type: OPEN_CHATBOX, payload: friend})
 });
 
 FriendsList.propTypes = {
   getFriends: PropTypes.func,
-  friendsList: PropTypes.array
+  friendsList: PropTypes.array,
+  openChatbox: PropTypes.array
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FriendsList);
